@@ -117,8 +117,11 @@ export function SlugChecker({
                 key={suggestion}
                 type="button"
                 onClick={() => handleSuggestionClick(suggestion)}
-                className="px-3 py-1 text-sm bg-pink-100 text-pink-700 rounded-full
-                         hover:bg-pink-200 transition-colors"
+                className="px-4 py-2 text-sm bg-gradient-to-r from-pink-400 to-rose-400 text-white
+                         rounded-full hover:from-pink-500 hover:to-rose-500 hover:scale-105
+                         active:scale-98 transition-all duration-200
+                         shadow-[0_2px_10px_rgba(244,114,182,0.3)]
+                         hover:shadow-[0_4px_14px_rgba(244,114,182,0.4)]"
               >
                 {suggestion}
               </button>

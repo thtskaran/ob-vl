@@ -83,7 +83,7 @@ export function Viewer() {
         {/* Footer for interactive templates */}
         <div className="fixed bottom-4 left-0 right-0 text-center z-50">
           <Link to="/">
-            <button className="text-pink-400 text-sm hover:text-pink-600 transition-colors bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
+            <button className="text-pink-600 font-semibold hover:text-pink-700 transition-all duration-200 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 active:scale-98 border-2 border-pink-200 hover:border-pink-300">
               Create your own 💕
             </button>
           </Link>

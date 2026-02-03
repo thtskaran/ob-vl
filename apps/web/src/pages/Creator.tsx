@@ -122,7 +122,7 @@ export function Creator() {
             <p className="text-gray-600">
               Share this link with your special someone:
             </p>
-            <div className="bg-pink-50 rounded-xl p-4 break-all">
+            <div className="bg-pink-50 rounded-2xl p-4 break-all">
               <a
                 href={result.url}
                 target="_blank"

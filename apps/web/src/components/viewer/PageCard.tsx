@@ -13,29 +13,29 @@ const templateStyles: Record<string, {
   accentColor?: string
 }> = {
   classic: {
-    primaryColor: '#e91e63',
-    secondaryColor: '#fce4ec',
+    primaryColor: '#ec4899',
+    secondaryColor: '#fce7f3',
     gradient: 'linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #fbcfe8 100%)',
     font: 'Pacifico, cursive',
-    accentColor: '#db2777',
+    accentColor: '#f43f5e',
   },
   modern: {
-    primaryColor: '#9c27b0',
-    secondaryColor: '#f3e5f5',
+    primaryColor: '#c084fc',
+    secondaryColor: '#f3e8ff',
     gradient: 'linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #e9d5ff 100%)',
     font: 'Nunito, sans-serif',
     accentColor: '#a855f7',
   },
   playful: {
-    primaryColor: '#f44336',
-    secondaryColor: '#ffebee',
-    gradient: 'linear-gradient(135deg, #fff7ed 0%, #ffedd5 50%, #fed7aa 100%)',
+    primaryColor: '#fb7185',
+    secondaryColor: '#ffe4e6',
+    gradient: 'linear-gradient(135deg, #fef2f2 0%, #ffe4e6 50%, #fecdd3 100%)',
     font: 'Caveat, cursive',
-    accentColor: '#fb923c',
+    accentColor: '#f43f5e',
   },
   elegant: {
-    primaryColor: '#880e4f',
-    secondaryColor: '#fce4ec',
+    primaryColor: '#db2777',
+    secondaryColor: '#fae8ff',
     gradient: 'linear-gradient(135deg, #fdf4ff 0%, #fae8ff 50%, #f5d0fe 100%)',
     font: 'Pacifico, cursive',
     accentColor: '#c026d3',
@@ -47,11 +47,19 @@ export function PageCard({ page }: PageCardProps) {
   const isPlayful = page.template_id === 'playful'
   const isModern = page.template_id === 'modern'
   const isElegant = page.template_id === 'elegant'
+  const isClassic = page.template_id === 'classic' || !page.template_id
 
   return (
     <div className="w-full max-w-lg sm:max-w-2xl mx-auto px-4 sm:px-0">
       {/* Floating decorative elements */}
       <div className="relative">
+        {/* Classic template - floating hearts */}
+        {isClassic && (
+          <>
+            <div className="absolute -top-8 -left-8 text-4xl animate-float opacity-70" style={{ color: styles.primaryColor }}>💕</div>
+            <div className="absolute -top-12 -right-12 text-5xl animate-float-delayed opacity-70" style={{ color: styles.accentColor }}>💖</div>
+          </>
+        )}
         {isPlayful && (
           <>
             <div className="absolute -top-8 -left-8 text-4xl animate-wiggle opacity-80">🎈</div>
@@ -65,11 +73,61 @@ export function PageCard({ page }: PageCardProps) {
           </>
         )}
 
+        {/* Decorative GIFs for classic templates */}
+        {isClassic && (
+          <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            {/* Top left GIF */}
+            <img
+              src="/7102e1771b31ce3665a3f15522a603b6.gif"
+              alt=""
+              className="hidden lg:block absolute w-28 opacity-40 animate-float"
+              style={{
+                left: '-5%',
+                top: '10%',
+                animationDuration: '4s',
+              }}
+            />
+            {/* Top right GIF */}
+            <img
+              src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif"
+              alt=""
+              className="hidden lg:block absolute w-28 opacity-40 animate-float-delayed"
+              style={{
+                right: '-5%',
+                top: '15%',
+                animationDuration: '4.5s',
+              }}
+            />
+            {/* Bottom left GIF */}
+            <img
+              src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif"
+              alt=""
+              className="hidden md:block absolute w-24 opacity-35 animate-wiggle"
+              style={{
+                left: '-3%',
+                bottom: '15%',
+                animationDuration: '3s',
+              }}
+            />
+            {/* Bottom right GIF */}
+            <img
+              src="/7102e1771b31ce3665a3f15522a603b6.gif"
+              alt=""
+              className="hidden md:block absolute w-24 opacity-35 animate-wiggle-delayed"
+              style={{
+                right: '-3%',
+                bottom: '20%',
+                animationDuration: '3.5s',
+              }}
+            />
+          </div>
+        )}
+
         <div
           className="rounded-3xl shadow-2xl overflow-hidden animate-fadeIn relative"
           style={{
             background: styles.gradient,
-            boxShadow: `0 25px 60px -15px ${styles.primaryColor}40`,
+            boxShadow: `0 25px 60px -15px ${styles.primaryColor}40, 0 10px 30px -10px ${styles.accentColor}30`,
           }}
         >
           {/* Background pattern overlay */}
@@ -95,6 +153,27 @@ export function PageCard({ page }: PageCardProps) {
             }}
           />
 
+          {/* Floating sparkles for classic and modern templates */}
+          {(isClassic || isModern) && (
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              {[...Array(6)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute text-xl opacity-20 animate-float"
+                  style={{
+                    left: `${15 + i * 15}%`,
+                    top: `${10 + (i % 3) * 30}%`,
+                    animationDelay: `${i * 0.6}s`,
+                    animationDuration: `${3 + (i % 2)}s`,
+                    color: i % 2 === 0 ? styles.primaryColor : styles.accentColor,
+                  }}
+                >
+                  ✨
+                </div>
+              ))}
+            </div>
+          )}
+
           <div className="relative p-6 sm:p-8 md:p-10">
             <div className="text-center space-y-5 sm:space-y-6">
               {/* Decorative header - unique per template */}
@@ -119,21 +198,31 @@ export function PageCard({ page }: PageCardProps) {
                 </div>
               ) : (
                 <div className="flex justify-center gap-3 sm:gap-4 text-3xl sm:text-4xl">
-                  <span style={{ color: styles.primaryColor }} className="animate-float opacity-80">♥</span>
-                  <span style={{ color: styles.accentColor }} className="animate-float-delayed">♥</span>
-                  <span style={{ color: styles.primaryColor }} className="animate-float opacity-80">♥</span>
+                  <span style={{ color: styles.primaryColor }} className="animate-float opacity-80">💕</span>
+                  <span style={{ color: styles.accentColor }} className="animate-heart-pulse">♥</span>
+                  <span style={{ color: styles.primaryColor }} className="animate-float-delayed opacity-80">💕</span>
                 </div>
               )}
 
               {/* Recipient */}
               {page.recipient_name && (
                 <div className="space-y-1">
-                  <p className="text-sm sm:text-base uppercase tracking-wider" style={{ color: styles.accentColor, opacity: 0.7 }}>
+                  <p
+                    className="text-sm sm:text-base uppercase tracking-wider font-semibold"
+                    style={{
+                      color: styles.accentColor,
+                      opacity: 0.8,
+                      fontFamily: 'Nunito, sans-serif',
+                    }}
+                  >
                     To
                   </p>
                   <p
                     className="text-xl sm:text-2xl font-bold"
-                    style={{ color: styles.primaryColor }}
+                    style={{
+                      color: styles.primaryColor,
+                      fontFamily: 'Nunito, sans-serif',
+                    }}
                   >
                     {page.recipient_name}
                   </p>
@@ -188,15 +277,19 @@ export function PageCard({ page }: PageCardProps) {
 
               {/* Message with subtle background */}
               <div
-                className="relative py-6 sm:py-8 px-4 sm:px-6 rounded-2xl"
+                className="relative py-6 sm:py-8 px-4 sm:px-6 rounded-3xl"
                 style={{
-                  backgroundColor: `${styles.secondaryColor}40`,
+                  backgroundColor: `${styles.secondaryColor}60`,
                   backdropFilter: 'blur(10px)',
                 }}
               >
                 <div
-                  className="text-base sm:text-lg text-gray-700 whitespace-pre-wrap break-words leading-relaxed"
-                  style={{ fontFamily: page.template_id === 'playful' ? 'Caveat, cursive' : 'Nunito, sans-serif', fontSize: page.template_id === 'playful' ? '1.25rem' : undefined }}
+                  className="text-base sm:text-lg whitespace-pre-wrap break-words leading-relaxed"
+                  style={{
+                    fontFamily: page.template_id === 'playful' ? 'Caveat, cursive' : 'Nunito, sans-serif',
+                    fontSize: page.template_id === 'playful' ? '1.25rem' : undefined,
+                    color: '#4a3728',
+                  }}
                 >
                   {page.message}
                 </div>
@@ -205,7 +298,14 @@ export function PageCard({ page }: PageCardProps) {
               {/* Sender */}
               {page.sender_name && (
                 <div className="space-y-2 pt-4">
-                  <p className="text-sm sm:text-base uppercase tracking-wider" style={{ color: styles.accentColor, opacity: 0.7 }}>
+                  <p
+                    className="text-sm sm:text-base uppercase tracking-wider font-semibold"
+                    style={{
+                      color: styles.accentColor,
+                      opacity: 0.8,
+                      fontFamily: 'Nunito, sans-serif',
+                    }}
+                  >
                     With Love
                   </p>
                   <p
@@ -269,12 +369,20 @@ export function PageCard({ page }: PageCardProps) {
           animation: fadeIn 0.6s ease-out;
         }
         @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(-5deg); }
-          50% { transform: translateY(-10px) rotate(5deg); }
+          0%, 100% {
+            transform: translateY(0) rotate(-5deg) scale(1);
+          }
+          50% {
+            transform: translateY(-15px) rotate(5deg) scale(1.05);
+          }
         }
         @keyframes float-delayed {
-          0%, 100% { transform: translateY(0) rotate(5deg); }
-          50% { transform: translateY(-12px) rotate(-5deg); }
+          0%, 100% {
+            transform: translateY(0) rotate(5deg) scale(1);
+          }
+          50% {
+            transform: translateY(-18px) rotate(-5deg) scale(1.05);
+          }
         }
         .animate-float {
           animation: float 3s ease-in-out infinite;
@@ -284,16 +392,23 @@ export function PageCard({ page }: PageCardProps) {
           animation-delay: 0.5s;
         }
         @keyframes heart-pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.15); }
+          0%, 100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.15);
+          }
         }
         .animate-heart-pulse {
           animation: heart-pulse 1.5s ease-in-out infinite;
         }
         @keyframes wiggle {
-          0%, 100% { transform: rotate(-5deg) scale(1); }
-          25% { transform: rotate(5deg) scale(1.05); }
-          75% { transform: rotate(-3deg) scale(1.05); }
+          0%, 100% {
+            transform: rotate(-10deg) scale(1);
+          }
+          50% {
+            transform: rotate(10deg) scale(1.05);
+          }
         }
         .animate-wiggle {
           animation: wiggle 2s ease-in-out infinite;
@@ -303,11 +418,28 @@ export function PageCard({ page }: PageCardProps) {
           animation-delay: 0.3s;
         }
         @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
         }
         .animate-spin-slow {
           animation: spin-slow 8s linear infinite;
+        }
+
+        /* Respect reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+          .animate-float,
+          .animate-float-delayed,
+          .animate-heart-pulse,
+          .animate-wiggle,
+          .animate-wiggle-delayed,
+          .animate-spin-slow,
+          .animate-fadeIn {
+            animation: none;
+          }
         }
       `}</style>
     </div>

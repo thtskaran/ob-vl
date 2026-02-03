@@ -29,6 +29,32 @@ export function EnvelopeTemplate({ page }: EnvelopeTemplateProps) {
         <div className="absolute top-20 right-20 text-6xl opacity-20 animate-float">💌</div>
         <div className="absolute bottom-32 left-16 text-5xl opacity-20 animate-float-delayed">💕</div>
         <div className="absolute top-1/3 left-1/4 text-4xl opacity-15 animate-wiggle">✉️</div>
+
+        {/* Decorative GIFs */}
+        <img
+          src="/7102e1771b31ce3665a3f15522a603b6.gif"
+          alt=""
+          className="hidden md:block absolute top-12 left-12 w-24 h-24 opacity-60 animate-float"
+          style={{ mixBlendMode: 'multiply' }}
+        />
+        <img
+          src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif"
+          alt=""
+          className="hidden md:block absolute top-16 right-16 w-28 h-28 opacity-70 animate-float-delayed"
+          style={{ mixBlendMode: 'multiply' }}
+        />
+        <img
+          src="/7102e1771b31ce3665a3f15522a603b6.gif"
+          alt=""
+          className="hidden lg:block absolute bottom-20 left-20 w-20 h-20 opacity-50 animate-wiggle"
+          style={{ mixBlendMode: 'multiply' }}
+        />
+        <img
+          src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif"
+          alt=""
+          className="hidden lg:block absolute bottom-24 right-24 w-32 h-32 opacity-65 animate-wiggle-delayed"
+          style={{ mixBlendMode: 'multiply' }}
+        />
       </div>
 
       <div className="w-full max-w-md sm:max-w-lg mx-auto relative z-10">
@@ -152,7 +178,7 @@ export function EnvelopeTemplate({ page }: EnvelopeTemplateProps) {
 
             {/* Letter content */}
             <div
-              className={`relative bg-white mx-3 sm:mx-4 rounded-xl shadow-inner transition-all duration-700 overflow-hidden ${
+              className={`relative bg-white mx-3 sm:mx-4 rounded-3xl shadow-inner transition-all duration-700 overflow-hidden ${
                 showLetter ? 'opacity-100 mt-4 mb-4' : 'opacity-0 mt-32'
               }`}
               style={{
@@ -287,6 +313,10 @@ export function EnvelopeTemplate({ page }: EnvelopeTemplateProps) {
         }
         .animate-wiggle {
           animation: wiggle 3s ease-in-out infinite;
+        }
+        .animate-wiggle-delayed {
+          animation: wiggle 3.5s ease-in-out infinite;
+          animation-delay: 1.5s;
         }
       `}</style>
     </div>

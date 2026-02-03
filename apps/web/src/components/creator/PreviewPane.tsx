@@ -80,10 +80,10 @@ function InteractivePreview({ templateId, title, recipientName, senderName }: {
           {title || "Will you be my Valentine?"}
         </h3>
         <div className="flex justify-center gap-4 pt-2">
-          <button className="px-4 py-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full text-sm font-medium shadow">
+          <button className="px-6 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full font-semibold shadow-[0_4px_14px_rgba(244,63,94,0.3)] hover:shadow-[0_6px_20px_rgba(244,63,94,0.4)] hover:scale-105 active:scale-98 transition-all duration-200">
             Yes! 💕
           </button>
-          <button className="px-3 py-1.5 bg-gray-200 text-gray-500 rounded-full text-sm">
+          <button className="px-4 py-2 bg-white text-pink-600 border-2 border-pink-300 rounded-full hover:bg-pink-50 hover:border-pink-400 hover:scale-105 active:scale-98 transition-all duration-200">
             No
           </button>
         </div>
@@ -103,7 +103,7 @@ function InteractivePreview({ templateId, title, recipientName, senderName }: {
         <p className="text-pink-500 text-sm">Click to open the love letter</p>
         <div className="relative mx-auto w-48 h-32">
           {/* Envelope body */}
-          <div className="absolute inset-0 bg-gradient-to-br from-rose-200 to-pink-300 rounded-lg shadow-lg" />
+          <div className="absolute inset-0 bg-gradient-to-br from-rose-200 to-pink-300 rounded-2xl shadow-lg" />
           {/* Envelope flap */}
           <div
             className="absolute top-0 left-0 right-0 bg-gradient-to-br from-rose-300 to-pink-400"
@@ -128,7 +128,7 @@ function InteractivePreview({ templateId, title, recipientName, senderName }: {
     return (
       <div className="text-center space-y-4 py-4">
         <p className="text-pink-500 text-sm">Scratch to reveal the message!</p>
-        <div className="relative mx-auto w-48 h-32 rounded-lg overflow-hidden shadow-lg">
+        <div className="relative mx-auto w-48 h-32 rounded-2xl overflow-hidden shadow-lg">
           {/* Hidden content preview */}
           <div className="absolute inset-0 bg-white flex items-center justify-center text-gray-300 text-xs p-4">
             Your message hidden underneath...
@@ -156,7 +156,7 @@ function InteractivePreview({ templateId, title, recipientName, senderName }: {
         )}
         <p className="text-pink-500">A special message awaits...</p>
         <div className="flex justify-center">
-          <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl flex items-center justify-center shadow-lg">
+          <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl flex items-center justify-center shadow-lg">
             <span className="text-3xl font-bold text-white">10</span>
           </div>
         </div>
@@ -197,7 +197,7 @@ export function PreviewPane({
       </p>
       <Card
         variant="elevated"
-        className="overflow-hidden"
+        className="overflow-hidden transition-all duration-300"
         style={{ backgroundColor: styles.secondaryColor }}
       >
         {isInteractive ? (

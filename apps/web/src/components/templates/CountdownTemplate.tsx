@@ -152,6 +152,18 @@ export function CountdownTemplate({ page }: CountdownTemplateProps) {
         <div className="absolute -top-10 -left-10 text-5xl animate-float opacity-70">🎁</div>
         <div className="absolute -top-12 -right-12 text-4xl animate-float-delayed opacity-70">✨</div>
 
+        {/* Decorative GIFs */}
+        <img
+          src="/7102e1771b31ce3665a3f15522a603b6.gif"
+          alt="decorative"
+          className="absolute -top-16 -left-20 w-24 h-24 sm:w-32 sm:h-32 opacity-60 animate-float pointer-events-none hidden md:block"
+        />
+        <img
+          src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif"
+          alt="decorative"
+          className="absolute -top-20 -right-24 w-28 h-28 sm:w-36 sm:h-36 opacity-70 animate-float-delayed pointer-events-none hidden md:block"
+        />
+
         <div
           className="rounded-3xl shadow-2xl p-6 sm:p-8 backdrop-blur-md relative overflow-hidden"
           style={{
@@ -283,6 +295,18 @@ export function CountdownTemplate({ page }: CountdownTemplateProps) {
         {/* Bottom decorative elements */}
         <div className="absolute -bottom-8 left-12 text-3xl animate-wiggle opacity-70">💝</div>
         <div className="absolute -bottom-10 right-16 text-4xl animate-wiggle-delayed opacity-70">🎀</div>
+
+        {/* Bottom decorative GIFs */}
+        <img
+          src="/7102e1771b31ce3665a3f15522a603b6.gif"
+          alt="decorative"
+          className="absolute -bottom-20 -left-16 w-24 h-24 sm:w-28 sm:h-28 opacity-50 animate-wiggle pointer-events-none hidden md:block"
+        />
+        <img
+          src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif"
+          alt="decorative"
+          className="absolute -bottom-24 -right-20 w-32 h-32 sm:w-36 sm:h-36 opacity-60 animate-wiggle-delayed pointer-events-none hidden md:block"
+        />
       </div>
 
       <style>{`

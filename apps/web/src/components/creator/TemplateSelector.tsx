@@ -118,7 +118,7 @@ export function TemplateSelector({ selected, onSelect }: TemplateSelectorProps) 
         {[1, 2, 3, 4, 5, 6].map((i) => (
           <div
             key={i}
-            className="h-32 rounded-xl bg-pink-100 animate-pulse"
+            className="h-32 rounded-3xl bg-pink-100 animate-pulse"
           />
         ))}
       </div>
@@ -152,7 +152,7 @@ export function TemplateSelector({ selected, onSelect }: TemplateSelectorProps) 
                 cursor-pointer transition-all duration-200 relative overflow-hidden
                 ${selected === template.id
                   ? 'ring-2 ring-pink-500 ring-offset-2'
-                  : 'hover:border-pink-300 hover:shadow-md'
+                  : 'hover:border-pink-300 hover:shadow-md hover:scale-105'
                 }
               `}
               onClick={() => onSelect(template.id)}
@@ -207,7 +207,7 @@ export function TemplateSelector({ selected, onSelect }: TemplateSelectorProps) 
                 cursor-pointer transition-all duration-200
                 ${selected === template.id
                   ? 'ring-2 ring-pink-500 ring-offset-2'
-                  : 'hover:border-pink-300'
+                  : 'hover:border-pink-300 hover:scale-105'
                 }
               `}
               onClick={() => onSelect(template.id)}

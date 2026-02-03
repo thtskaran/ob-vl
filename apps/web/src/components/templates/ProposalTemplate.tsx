@@ -63,9 +63,38 @@ export function ProposalTemplate({ page }: ProposalTemplateProps) {
 
   if (accepted) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
+      <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 relative overflow-hidden">
         <Confetti trigger={true} />
-        <div className="w-full max-w-lg mx-auto">
+
+        {/* Decorative GIFs for success state */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <img
+            src="/7102e1771b31ce3665a3f15522a603b6.gif"
+            alt=""
+            className="hidden md:block absolute top-10 left-10 w-28 h-28 opacity-70 animate-bounce"
+            style={{ filter: 'hue-rotate(-10deg) brightness(1.15)', animationDuration: '2s' }}
+          />
+          <img
+            src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif"
+            alt=""
+            className="hidden md:block absolute top-16 right-12 w-32 h-32 opacity-75 animate-bounce"
+            style={{ filter: 'hue-rotate(5deg) brightness(1.1)', animationDuration: '2.3s', animationDelay: '0.2s' }}
+          />
+          <img
+            src="/7102e1771b31ce3665a3f15522a603b6.gif"
+            alt=""
+            className="absolute bottom-12 left-8 md:left-16 w-24 md:w-28 h-24 md:h-28 opacity-65 animate-bounce"
+            style={{ filter: 'brightness(1.12)', animationDuration: '2.1s', animationDelay: '0.4s' }}
+          />
+          <img
+            src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif"
+            alt=""
+            className="absolute bottom-10 right-4 md:right-20 w-28 md:w-32 h-28 md:h-32 opacity-70 animate-bounce"
+            style={{ filter: 'hue-rotate(-5deg) brightness(1.08)', animationDuration: '2.2s', animationDelay: '0.1s' }}
+          />
+        </div>
+
+        <div className="w-full max-w-lg mx-auto relative z-10">
           <div
             className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-6 sm:p-8 text-center"
             style={{
@@ -132,6 +161,57 @@ export function ProposalTemplate({ page }: ProposalTemplateProps) {
         <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-red-200/20 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '2s' }} />
       </div>
 
+      {/* Decorative GIFs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Top left GIF */}
+        <img
+          src="/7102e1771b31ce3665a3f15522a603b6.gif"
+          alt=""
+          className="hidden md:block absolute top-8 left-8 w-24 h-24 opacity-60 animate-float"
+          style={{ filter: 'hue-rotate(-10deg) brightness(1.1)' }}
+        />
+
+        {/* Top right GIF */}
+        <img
+          src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif"
+          alt=""
+          className="hidden md:block absolute top-12 right-12 w-28 h-28 opacity-70 animate-float-delayed"
+          style={{ filter: 'hue-rotate(5deg) brightness(1.05)' }}
+        />
+
+        {/* Bottom left GIF */}
+        <img
+          src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif"
+          alt=""
+          className="absolute bottom-16 left-4 md:left-16 w-20 md:w-24 h-20 md:h-24 opacity-50 animate-wiggle"
+          style={{ filter: 'hue-rotate(-5deg)' }}
+        />
+
+        {/* Bottom right GIF */}
+        <img
+          src="/7102e1771b31ce3665a3f15522a603b6.gif"
+          alt=""
+          className="absolute bottom-8 right-8 md:right-20 w-24 md:w-32 h-24 md:h-32 opacity-65 animate-wiggle-delayed"
+          style={{ filter: 'brightness(1.1)' }}
+        />
+
+        {/* Middle left GIF - mobile hidden */}
+        <img
+          src="/7102e1771b31ce3665a3f15522a603b6.gif"
+          alt=""
+          className="hidden lg:block absolute top-1/3 left-4 w-20 h-20 opacity-55 animate-pulse-soft"
+          style={{ filter: 'hue-rotate(10deg)' }}
+        />
+
+        {/* Middle right GIF - mobile hidden */}
+        <img
+          src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif"
+          alt=""
+          className="hidden lg:block absolute top-2/3 right-6 w-22 h-22 opacity-60 animate-bounce"
+          style={{ filter: 'hue-rotate(-8deg) brightness(1.08)', animationDuration: '2.5s' }}
+        />
+      </div>
+
       <div className="w-full max-w-lg mx-auto relative z-10">
         {/* Decorative floating elements */}
         <div className="absolute -top-12 -left-8 text-5xl animate-float opacity-60">💝</div>
@@ -183,7 +263,7 @@ export function ProposalTemplate({ page }: ProposalTemplateProps) {
             {/* Fun message bubble */}
             <div className="h-12 sm:h-14 flex items-center justify-center">
               {message && (
-                <div className="bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-sm sm:text-base font-medium animate-bounce shadow-md">
+                <div className="bg-pink-100 text-pink-600 px-6 py-3 rounded-full text-sm sm:text-base font-semibold animate-bounce shadow-lg">
                   {message}
                 </div>
               )}
@@ -196,12 +276,12 @@ export function ProposalTemplate({ page }: ProposalTemplateProps) {
                 <button
                   onClick={handleYesClick}
                   className="px-6 sm:px-10 py-3 sm:py-4 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-500
-                           text-white rounded-full font-bold shadow-xl
-                           hover:shadow-2xl transition-all duration-300 active:scale-95
+                           text-white rounded-full font-bold
+                           hover:scale-105 transition-all duration-300 active:scale-98
                            text-base sm:text-lg whitespace-nowrap"
                   style={{
                     transform: `scale(${yesScale})`,
-                    boxShadow: `0 ${10 * yesScale}px ${30 * yesScale}px -5px rgba(236, 72, 153, 0.5)`,
+                    boxShadow: `0 ${4 * yesScale}px ${14 * yesScale}px rgba(244, 63, 94, ${0.3 * yesScale})`,
                   }}
                 >
                   Yes! 💕
@@ -215,10 +295,10 @@ export function ProposalTemplate({ page }: ProposalTemplateProps) {
                   e.preventDefault()
                   moveNoButton()
                 }}
-                className="absolute left-1/2 top-1/2 translate-x-[30%] sm:translate-x-[40%] -translate-y-1/2 px-4 sm:px-5 py-2 sm:py-2.5
-                         bg-gray-100 text-gray-400 rounded-full font-medium
+                className="absolute left-1/2 top-1/2 translate-x-[30%] sm:translate-x-[40%] -translate-y-1/2 px-5 sm:px-6 py-2.5 sm:py-3
+                         bg-white text-pink-600 border-2 border-pink-300 rounded-full font-semibold
                          transition-all duration-300 ease-out text-sm sm:text-base
-                         hover:bg-gray-200 border border-gray-200 z-20"
+                         hover:bg-pink-50 hover:border-pink-400 z-20"
                 style={{
                   transform: `translate(calc(30% + ${noPosition.x}px), calc(-50% + ${noPosition.y}px))
                              scale(${Math.max(0.6, 1 - noAttempts * 0.08)})`,
@@ -280,6 +360,13 @@ export function ProposalTemplate({ page }: ProposalTemplateProps) {
         .animate-wiggle-delayed {
           animation: wiggle 3.5s ease-in-out infinite;
           animation-delay: 0.7s;
+        }
+        @keyframes pulse-soft {
+          0%, 100% { opacity: 0.55; transform: scale(1); }
+          50% { opacity: 0.75; transform: scale(1.05); }
+        }
+        .animate-pulse-soft {
+          animation: pulse-soft 3s ease-in-out infinite;
         }
       `}</style>
     </div>

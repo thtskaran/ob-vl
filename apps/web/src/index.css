@@ -45,7 +45,7 @@ body {
 
 /* Focus styles */
 *:focus-visible {
-  outline: 2px solid #ec4899;
+  outline: 3px solid #f472b6;
   outline-offset: 2px;
 }
 

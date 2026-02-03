@@ -8,6 +8,9 @@ dist/
 build/
 .next/
 out/
+*.tsbuildinfo
+vite.config.d.ts
+vite.config.js
 
 # Python
 __pycache__/

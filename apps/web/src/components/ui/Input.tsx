@@ -24,13 +24,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <input
             ref={ref}
             className={`
-              w-full rounded-xl border-2 bg-white/80 backdrop-blur-sm
+              w-full rounded-2xl border-2 bg-white/80 backdrop-blur-sm
               px-4 py-3 text-gray-700 placeholder-pink-300
               transition-all duration-200
-              focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-400
+              focus:outline-none focus:ring-4 focus:ring-pink-400/15 focus:border-pink-400
               hover:border-pink-300
               ${icon ? 'pl-10' : ''}
-              ${error ? 'border-red-400 focus:border-red-400 focus:ring-red-200' : 'border-pink-200'}
+              ${error ? 'border-red-400 focus:border-red-400 focus:ring-red-400/15' : 'border-pink-200'}
               ${className}
             `}
             {...props}
@@ -65,12 +65,12 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         <textarea
           ref={ref}
           className={`
-            w-full rounded-xl border-2 bg-white/80 backdrop-blur-sm
+            w-full rounded-2xl border-2 bg-white/80 backdrop-blur-sm
             px-4 py-3 text-gray-700 placeholder-pink-300
             transition-all duration-200 resize-none
-            focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-400
+            focus:outline-none focus:ring-4 focus:ring-pink-400/15 focus:border-pink-400
             hover:border-pink-300
-            ${error ? 'border-red-400 focus:border-red-400 focus:ring-red-200' : 'border-pink-200'}
+            ${error ? 'border-red-400 focus:border-red-400 focus:ring-red-400/15' : 'border-pink-200'}
             ${className}
           `}
           {...props}

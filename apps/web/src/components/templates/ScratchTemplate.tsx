@@ -184,6 +184,83 @@ export function ScratchTemplate({ page }: ScratchTemplateProps) {
         ))}
       </div>
 
+      {/* Decorative GIFs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Top left GIF */}
+        <img
+          src="/7102e1771b31ce3665a3f15522a603b6.gif"
+          alt=""
+          className="hidden md:block absolute w-24 sm:w-32 lg:w-40 opacity-60 animate-float"
+          style={{
+            left: '5%',
+            top: '10%',
+            animationDuration: '4s',
+          }}
+        />
+
+        {/* Top right GIF */}
+        <img
+          src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif"
+          alt=""
+          className="hidden md:block absolute w-24 sm:w-32 lg:w-40 opacity-60 animate-float-delayed"
+          style={{
+            right: '5%',
+            top: '15%',
+            animationDuration: '4.5s',
+            animationDelay: '1s',
+          }}
+        />
+
+        {/* Bottom left GIF */}
+        <img
+          src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif"
+          alt=""
+          className="hidden sm:block absolute w-20 sm:w-28 lg:w-36 opacity-50 animate-wiggle"
+          style={{
+            left: '8%',
+            bottom: '15%',
+            animationDuration: '3s',
+          }}
+        />
+
+        {/* Bottom right GIF */}
+        <img
+          src="/7102e1771b31ce3665a3f15522a603b6.gif"
+          alt=""
+          className="hidden sm:block absolute w-20 sm:w-28 lg:w-36 opacity-50 animate-wiggle-delayed"
+          style={{
+            right: '8%',
+            bottom: '12%',
+            animationDuration: '3.5s',
+            animationDelay: '0.8s',
+          }}
+        />
+
+        {/* Mobile - smaller centered top decoration */}
+        <img
+          src="/7102e1771b31ce3665a3f15522a603b6.gif"
+          alt=""
+          className="block sm:hidden absolute w-16 opacity-50 animate-bounce"
+          style={{
+            left: '10%',
+            top: '5%',
+            animationDuration: '2s',
+          }}
+        />
+
+        {/* Mobile - smaller centered bottom decoration */}
+        <img
+          src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif"
+          alt=""
+          className="block sm:hidden absolute w-16 opacity-50 animate-pulse-soft"
+          style={{
+            right: '10%',
+            top: '8%',
+            animationDuration: '3s',
+          }}
+        />
+      </div>
+
       <div className="w-full max-w-md sm:max-w-lg mx-auto space-y-4 sm:space-y-6 relative z-10">
         {/* Header */}
         <div className="text-center space-y-3">
@@ -380,6 +457,9 @@ export function ScratchTemplate({ page }: ScratchTemplateProps) {
         .animate-float {
           animation: float 3s ease-in-out infinite;
         }
+        .animate-float-delayed {
+          animation: float 3s ease-in-out infinite;
+        }
         @keyframes wiggle {
           0%, 100% { transform: rotate(-10deg); }
           50% { transform: rotate(10deg); }
@@ -397,6 +477,13 @@ export function ScratchTemplate({ page }: ScratchTemplateProps) {
         }
         .animate-shimmer {
           animation: shimmer 2s infinite;
+        }
+        @keyframes pulse-soft {
+          0%, 100% { opacity: 0.5; transform: scale(1); }
+          50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        .animate-pulse-soft {
+          animation: pulse-soft 3s ease-in-out infinite;
         }
       `}</style>
     </div>
