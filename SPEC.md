@@ -1,3 +1,4 @@
+
 # Special Page Generator - Technical Specification
 
 ## Overview
@@ -236,6 +237,462 @@ RATE_LIMITS = {
 3. **Separate concerns**: Move Redis to managed service
 4. **Read replicas**: Litestream + read replicas if needed
 5. **Full migration**: PostgreSQL + multiple app servers
+
+---
+
+## Design Requirements
+
+### Visual Identity
+
+**Theme:** Soft, romantic, cute Valentine's aesthetic
+**Mood:** Warm, playful, heartfelt, whimsical
+
+### Color Palette
+
+```css
+:root {
+  /* Primary - Soft pinks */
+  --pink-50: #fdf2f8;
+  --pink-100: #fce7f3;
+  --pink-200: #fbcfe8;
+  --pink-300: #f9a8d4;
+  --pink-400: #f472b6;
+  --pink-500: #ec4899;
+
+  /* Secondary - Warm reds */
+  --rose-400: #fb7185;
+  --rose-500: #f43f5e;
+  --rose-600: #e11d48;
+
+  /* Accent - Soft purples */
+  --purple-200: #e9d5ff;
+  --purple-300: #d8b4fe;
+  --purple-400: #c084fc;
+
+  /* Neutrals - Warm tones */
+  --cream: #fffbf5;
+  --warm-white: #fefcfb;
+  --soft-gray: #9ca3af;
+  --text-primary: #4a3728;
+  --text-secondary: #78716c;
+
+  /* Gradients */
+  --gradient-romantic: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 50%, #f9a8d4 100%);
+  --gradient-sunset: linear-gradient(135deg, #fecdd3 0%, #fda4af 50%, #fb7185 100%);
+  --gradient-dreamy: linear-gradient(135deg, #f5d0fe 0%, #e9d5ff 50%, #ddd6fe 100%);
+}
+```
+
+### Typography
+
+**Font Stack:**
+```css
+/* Headings - Playful, romantic script */
+--font-display: 'Pacifico', 'Dancing Script', cursive;
+
+/* Body - Soft, rounded sans-serif */
+--font-body: 'Nunito', 'Quicksand', 'Poppins', sans-serif;
+
+/* Accent - Handwritten feel */
+--font-handwritten: 'Caveat', 'Kalam', cursive;
+```
+
+**Font Sizes:**
+```css
+--text-xs: 0.75rem;    /* 12px */
+--text-sm: 0.875rem;   /* 14px */
+--text-base: 1rem;     /* 16px */
+--text-lg: 1.125rem;   /* 18px */
+--text-xl: 1.25rem;    /* 20px */
+--text-2xl: 1.5rem;    /* 24px */
+--text-3xl: 2rem;      /* 32px */
+--text-4xl: 2.5rem;    /* 40px */
+--text-hero: 3.5rem;   /* 56px */
+```
+
+### UI Elements
+
+#### Buttons
+
+```
+┌─────────────────────────────────────────┐
+│  Primary Button                         │
+│  - Gradient background (pink → rose)    │
+│  - Rounded corners (full pill shape)    │
+│  - Soft shadow                          │
+│  - Hover: scale up 1.05, glow effect    │
+│  - Active: scale down 0.98              │
+└─────────────────────────────────────────┘
+
+┌─────────────────────────────────────────┐
+│  Secondary Button                       │
+│  - White/cream background               │
+│  - Pink border                          │
+│  - Hover: fill with soft pink           │
+└─────────────────────────────────────────┘
+```
+
+```css
+.btn-primary {
+  background: linear-gradient(135deg, #f472b6, #f43f5e);
+  color: white;
+  border-radius: 9999px;
+  padding: 12px 32px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(244, 63, 94, 0.4);
+}
+```
+
+#### Input Fields
+
+```css
+.input-field {
+  background: var(--warm-white);
+  border: 2px solid var(--pink-200);
+  border-radius: 16px;
+  padding: 14px 20px;
+  font-family: var(--font-body);
+  transition: all 0.2s ease;
+}
+
+.input-field:focus {
+  border-color: var(--pink-400);
+  box-shadow: 0 0 0 4px rgba(244, 114, 182, 0.15);
+  outline: none;
+}
+
+.input-field::placeholder {
+  color: var(--soft-gray);
+  font-style: italic;
+}
+```
+
+#### Cards
+
+```css
+.card {
+  background: white;
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.02),
+    0 10px 40px rgba(244, 114, 182, 0.1);
+  border: 1px solid var(--pink-100);
+}
+```
+
+### Decorative Elements
+
+#### Floating Hearts
+
+```
+    ♥        Small hearts floating upward
+  ♥   ♥      Random sizes (8px - 24px)
+    ♥        Random opacity (0.3 - 0.8)
+  ♥          Gentle swaying motion
+      ♥      Infinite loop, staggered timing
+```
+
+```css
+@keyframes float-heart {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+.floating-heart {
+  position: fixed;
+  color: var(--pink-300);
+  animation: float-heart 8s ease-in-out infinite;
+  pointer-events: none;
+}
+```
+
+#### Sparkles / Twinkles
+
+```css
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+.sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  animation: sparkle 1.5s ease-in-out infinite;
+  box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.8);
+}
+```
+
+#### Confetti (on page creation success)
+
+```typescript
+// Use canvas-confetti library
+confetti({
+  particleCount: 100,
+  spread: 70,
+  origin: { y: 0.6 },
+  colors: ['#f472b6', '#fb7185', '#c084fc', '#fda4af', '#f9a8d4']
+});
+```
+
+### Animations
+
+#### Page Transitions
+
+```css
+/* Fade + slide up */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: page-enter 0.4s ease-out;
+}
+```
+
+#### Micro-interactions
+
+```css
+/* Heart pulse on hover */
+@keyframes pulse-heart {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.heart-icon:hover {
+  animation: pulse-heart 0.6s ease-in-out infinite;
+  color: var(--rose-500);
+}
+
+/* Wiggle for attention */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+
+/* Bounce for success */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+```
+
+#### Loading States
+
+```css
+/* Bouncing hearts loader */
+@keyframes bounce-loader {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+.loader-hearts {
+  display: flex;
+  gap: 8px;
+}
+
+.loader-hearts span {
+  width: 12px;
+  height: 12px;
+  background: var(--pink-400);
+  border-radius: 50%;
+  animation: bounce-loader 1.4s ease-in-out infinite;
+}
+
+.loader-hearts span:nth-child(2) { animation-delay: 0.16s; }
+.loader-hearts span:nth-child(3) { animation-delay: 0.32s; }
+```
+
+### Page Layouts
+
+#### Creator Page
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  [Floating hearts background - subtle, 5-8 hearts]         │
+│                                                             │
+│     ┌─────────────────────────────────────────────────┐    │
+│     │                                                  │    │
+│     │           Create Something Special               │    │
+│     │              (Pacifico font, pink)              │    │
+│     │                                                  │    │
+│     │     ┌───────────────────────────────────────┐   │    │
+│     │     │                                        │   │    │
+│     │     │         [Form Card - white]           │   │    │
+│     │     │                                        │   │    │
+│     │     │    To: [___________] sparkle icon     │   │    │
+│     │     │                                        │   │    │
+│     │     │    From: [___________] heart icon     │   │    │
+│     │     │                                        │   │    │
+│     │     │    Message:                           │   │    │
+│     │     │    ┌─────────────────────────────┐    │   │    │
+│     │     │    │                              │    │   │    │
+│     │     │    │  (placeholder in italic)    │    │   │    │
+│     │     │    │                              │    │   │    │
+│     │     │    └─────────────────────────────┘    │   │    │
+│     │     │                                        │   │    │
+│     │     │         [  Create with Love  ]        │   │    │
+│     │     │           (gradient button)           │   │    │
+│     │     │                                        │   │    │
+│     │     └───────────────────────────────────────┘   │    │
+│     │                                                  │    │
+│     └─────────────────────────────────────────────────┘    │
+│                                                             │
+│  [Decorative curved lines / swirls in corners]             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+#### Generated Page (Viewer)
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                                                             │
+│  [Animated gradient background - slow shifting pinks]       │
+│                                                             │
+│     ┌─────────────────────────────────────────────────┐    │
+│     │                                                  │    │
+│     │              ♥  FOR YOU  ♥                       │    │
+│     │           (Caveat handwritten font)             │    │
+│     │                                                  │    │
+│     │     ┌───────────────────────────────────────┐   │    │
+│     │     │                                        │   │    │
+│     │     │        Dear [Recipient Name],          │   │    │
+│     │     │                                        │   │    │
+│     │     │   [Message content in Nunito font]    │   │    │
+│     │     │   [with gentle fade-in animation]     │   │    │
+│     │     │                                        │   │    │
+│     │     │            With love,                  │   │    │
+│     │     │         [Sender Name] ♥               │   │    │
+│     │     │                                        │   │    │
+│     │     └───────────────────────────────────────┘   │    │
+│     │                                                  │    │
+│     │     [Sparkles appear around the card]           │    │
+│     │                                                  │    │
+│     └─────────────────────────────────────────────────┘    │
+│                                                             │
+│  [Create your own →] (small link at bottom)                │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Template Variations
+
+| Template | Background | Accent | Special Element |
+|----------|------------|--------|-----------------|
+| Valentine | Soft pink gradient | Rose red | Floating hearts |
+| Birthday | Warm cream + confetti | Purple/gold | Balloons animation |
+| Thank You | Lavender gradient | Soft purple | Sparkles |
+| Love Note | Parchment texture | Deep rose | Wax seal icon |
+| Friendship | Peach gradient | Coral | Stars twinkle |
+
+### Responsive Design
+
+```css
+/* Mobile-first breakpoints */
+--breakpoint-sm: 640px;   /* Large phones */
+--breakpoint-md: 768px;   /* Tablets */
+--breakpoint-lg: 1024px;  /* Laptops */
+--breakpoint-xl: 1280px;  /* Desktops */
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .card {
+    border-radius: 20px;
+    padding: 24px;
+    margin: 16px;
+  }
+
+  .text-hero {
+    font-size: 2.5rem;
+  }
+
+  /* Reduce floating hearts on mobile for performance */
+  .floating-hearts-container {
+    --heart-count: 4;
+  }
+}
+```
+
+### Accessibility
+
+```css
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .floating-heart,
+  .sparkle,
+  .confetti {
+    animation: none;
+  }
+
+  .btn-primary:hover {
+    transform: none;
+  }
+
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus states for keyboard navigation */
+:focus-visible {
+  outline: 3px solid var(--pink-400);
+  outline-offset: 2px;
+}
+
+/* Sufficient color contrast */
+.text-primary { /* 7:1 contrast on cream background */ }
+```
+
+### Assets Needed
+
+**Icons (use Lucide or custom SVG):**
+- Heart (filled, outline, broken)
+- Sparkle / Star
+- Gift
+- Envelope (open, closed)
+- Arrow right
+- Check circle
+- X circle
+
+**Illustrations (optional - for empty states):**
+- Cute bear/bunny holding heart
+- Love letter with wings
+- Heart-shaped balloon
+
+**Sounds (optional - muted by default):**
+- Soft "pop" on button click
+- Gentle chime on success
+- Paper unfold on page reveal
 
 ---
 
