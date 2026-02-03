@@ -71,12 +71,13 @@ export function ContentForm({
         value={message}
         onChange={(e) => onMessageChange(e.target.value)}
         error={errors.message}
-        rows={5}
+        rows={6}
         maxLength={2000}
         required
+        className="text-sm sm:text-base"
       />
 
-      <p className="text-sm text-pink-400 text-right">
+      <p className="text-xs sm:text-sm text-pink-400 text-right">
         {message.length}/2000 characters
       </p>
     </div>

@@ -114,7 +114,7 @@ export function ProposalTemplate({ page }: ProposalTemplateProps) {
               )}
 
               <h1
-                className="text-3xl sm:text-4xl md:text-5xl text-pink-600 leading-tight"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-pink-600 leading-tight px-4"
                 style={{ fontFamily: 'Pacifico, cursive' }}
               >
                 Yay! You said YES!
@@ -127,7 +127,7 @@ export function ProposalTemplate({ page }: ProposalTemplateProps) {
               </div>
 
               <div
-                className="py-4 sm:py-6 px-2 text-base sm:text-lg text-gray-700 whitespace-pre-wrap leading-relaxed"
+                className="py-3 sm:py-4 md:py-6 px-3 sm:px-4 text-sm sm:text-base md:text-lg text-gray-700 whitespace-pre-wrap leading-relaxed"
                 style={{ fontFamily: 'Nunito, sans-serif' }}
               >
                 {page.message}
@@ -135,7 +135,7 @@ export function ProposalTemplate({ page }: ProposalTemplateProps) {
 
               {page.sender_name && (
                 <p
-                  className="text-xl sm:text-2xl text-pink-600"
+                  className="text-lg sm:text-xl md:text-2xl text-pink-600 px-4"
                   style={{ fontFamily: 'Pacifico, cursive' }}
                 >
                   Forever yours, {page.sender_name}
@@ -241,44 +241,44 @@ export function ProposalTemplate({ page }: ProposalTemplateProps) {
             </div>
 
             {page.recipient_name && (
-              <div className="text-center">
-                <p className="text-sm sm:text-base uppercase tracking-wider text-rose-400 mb-1">To</p>
-                <p className="text-xl sm:text-2xl text-pink-600 font-bold">
+              <div className="text-center px-4">
+                <p className="text-xs sm:text-sm uppercase tracking-wider text-rose-400 mb-1">To</p>
+                <p className="text-lg sm:text-xl md:text-2xl text-pink-600 font-bold">
                   {page.recipient_name}
                 </p>
               </div>
             )}
 
             <div className="relative py-2">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-pink-300 to-transparent" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-pink-300 to-transparent" />
               <h1
-                className="text-center text-2xl sm:text-3xl md:text-4xl text-pink-600 leading-tight px-2 py-4"
+                className="text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl text-pink-600 leading-tight px-3 sm:px-4 py-3 sm:py-4"
                 style={{ fontFamily: 'Pacifico, cursive' }}
               >
                 {page.title || "Will you be my Valentine?"}
               </h1>
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-pink-300 to-transparent" />
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-pink-300 to-transparent" />
             </div>
 
             {/* Fun message bubble */}
-            <div className="h-12 sm:h-14 flex items-center justify-center">
+            <div className="h-14 sm:h-16 flex items-center justify-center px-4">
               {message && (
-                <div className="bg-pink-100 text-pink-600 px-6 py-3 rounded-full text-sm sm:text-base font-semibold animate-bounce shadow-lg">
+                <div className="bg-pink-100 text-pink-600 px-4 sm:px-6 py-2 sm:py-3 rounded-full text-xs sm:text-sm md:text-base font-semibold animate-bounce shadow-lg max-w-full">
                   {message}
                 </div>
               )}
             </div>
 
             {/* Button area - relative container */}
-            <div className="relative h-48 sm:h-56">
+            <div className="relative h-48 sm:h-56 px-4">
               {/* Yes Button - fixed position left side */}
-              <div className="absolute left-1/2 top-1/2 -translate-x-[130%] sm:-translate-x-[140%] -translate-y-1/2 z-10">
+              <div className="absolute left-1/2 top-1/2 -translate-x-[120%] sm:-translate-x-[130%] md:-translate-x-[140%] -translate-y-1/2 z-10">
                 <button
                   onClick={handleYesClick}
-                  className="px-6 sm:px-10 py-3 sm:py-4 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-500
-                           text-white rounded-full font-bold
+                  className="px-5 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-4 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-500
+                           text-white rounded-full font-bold min-h-[44px]
                            hover:scale-105 transition-all duration-300 active:scale-98
-                           text-base sm:text-lg whitespace-nowrap"
+                           text-sm sm:text-base md:text-lg whitespace-nowrap"
                   style={{
                     transform: `scale(${yesScale})`,
                     boxShadow: `0 ${4 * yesScale}px ${14 * yesScale}px rgba(244, 63, 94, ${0.3 * yesScale})`,
@@ -295,12 +295,12 @@ export function ProposalTemplate({ page }: ProposalTemplateProps) {
                   e.preventDefault()
                   moveNoButton()
                 }}
-                className="absolute left-1/2 top-1/2 translate-x-[30%] sm:translate-x-[40%] -translate-y-1/2 px-5 sm:px-6 py-2.5 sm:py-3
-                         bg-white text-pink-600 border-2 border-pink-300 rounded-full font-semibold
-                         transition-all duration-300 ease-out text-sm sm:text-base
+                className="absolute left-1/2 top-1/2 translate-x-[20%] sm:translate-x-[30%] md:translate-x-[40%] -translate-y-1/2 px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3
+                         bg-white text-pink-600 border-2 border-pink-300 rounded-full font-semibold min-h-[44px]
+                         transition-all duration-300 ease-out text-xs sm:text-sm md:text-base
                          hover:bg-pink-50 hover:border-pink-400 z-20"
                 style={{
-                  transform: `translate(calc(30% + ${noPosition.x}px), calc(-50% + ${noPosition.y}px))
+                  transform: `translate(calc(20% + ${noPosition.x}px), calc(-50% + ${noPosition.y}px))
                              scale(${Math.max(0.6, 1 - noAttempts * 0.08)})`,
                   opacity: Math.max(0.4, 1 - noAttempts * 0.08),
                 }}
@@ -320,10 +320,10 @@ export function ProposalTemplate({ page }: ProposalTemplateProps) {
             )}
 
             {page.sender_name && (
-              <div className="text-center">
-                <p className="text-sm uppercase tracking-wider text-rose-400 mb-1">From</p>
+              <div className="text-center px-4">
+                <p className="text-xs sm:text-sm uppercase tracking-wider text-rose-400 mb-1">From</p>
                 <p
-                  className="text-xl sm:text-2xl text-pink-600"
+                  className="text-lg sm:text-xl md:text-2xl text-pink-600"
                   style={{ fontFamily: 'Pacifico, cursive' }}
                 >
                   {page.sender_name}

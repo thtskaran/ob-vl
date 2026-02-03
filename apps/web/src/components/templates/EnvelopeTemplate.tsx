@@ -60,15 +60,15 @@ export function EnvelopeTemplate({ page }: EnvelopeTemplateProps) {
       <div className="w-full max-w-md sm:max-w-lg mx-auto relative z-10">
         {/* Instruction */}
         {!isOpen && (
-          <div className="text-center mb-6 sm:mb-8 space-y-3">
+          <div className="text-center mb-4 sm:mb-6 md:mb-8 space-y-2 sm:space-y-3 px-4">
             <div className="inline-block">
-              <div className="bg-white/80 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg border border-pink-200">
-                <p className="text-pink-600 text-lg sm:text-xl font-medium animate-pulse">
+              <div className="bg-white/80 backdrop-blur-sm rounded-full px-4 sm:px-6 py-2 sm:py-3 shadow-lg border border-pink-200">
+                <p className="text-pink-600 text-base sm:text-lg md:text-xl font-medium animate-pulse">
                   You have a love letter! 💌
                 </p>
               </div>
             </div>
-            <p className="text-pink-400 text-sm sm:text-base flex items-center justify-center gap-2">
+            <p className="text-pink-400 text-xs sm:text-sm md:text-base flex items-center justify-center gap-2">
               <span className="inline-block animate-bounce">👇</span>
               <span>Tap the envelope to open</span>
               <span className="inline-block animate-bounce" style={{ animationDelay: '0.2s' }}>👇</span>
@@ -95,8 +95,8 @@ export function EnvelopeTemplate({ page }: EnvelopeTemplateProps) {
             style={{
               width: '100%',
               maxWidth: '400px',
-              height: isOpen ? 'auto' : '260px',
-              minHeight: isOpen ? '450px' : '260px',
+              height: isOpen ? 'auto' : '220px',
+              minHeight: isOpen ? '400px' : '220px',
               background: 'linear-gradient(145deg, #fecdd3 0%, #fda4af 50%, #fb7185 100%)',
               boxShadow: isOpen
                 ? '0 25px 60px -15px rgba(244, 63, 94, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.3)'
@@ -125,7 +125,7 @@ export function EnvelopeTemplate({ page }: EnvelopeTemplateProps) {
               <div
                 className="w-full"
                 style={{
-                  height: '130px',
+                  height: '110px',
                   background: 'linear-gradient(180deg, #f43f5e 0%, #e11d48 100%)',
                   clipPath: 'polygon(0 0, 50% 100%, 100% 0)',
                   backfaceVisibility: 'hidden',
@@ -136,7 +136,7 @@ export function EnvelopeTemplate({ page }: EnvelopeTemplateProps) {
               <div
                 className="absolute top-0 left-0 w-full"
                 style={{
-                  height: '130px',
+                  height: '110px',
                   background: 'linear-gradient(180deg, #fda4af 0%, #fecdd3 100%)',
                   clipPath: 'polygon(0 0, 50% 100%, 100% 0)',
                   transform: 'rotateX(180deg)',
@@ -148,20 +148,20 @@ export function EnvelopeTemplate({ page }: EnvelopeTemplateProps) {
             {/* Wax seal */}
             <div
               className={`absolute left-1/2 -translate-x-1/2 z-30 transition-all duration-500 ${
-                isOpen ? 'opacity-0 scale-0 top-0 rotate-180' : 'opacity-100 scale-100 top-[85px] rotate-0'
+                isOpen ? 'opacity-0 scale-0 top-0 rotate-180' : 'opacity-100 scale-100 top-[70px] sm:top-[85px] rotate-0'
               }`}
             >
               <div className="relative">
                 {/* Outer glow */}
                 <div
-                  className="absolute inset-0 w-14 h-14 sm:w-16 sm:h-16 rounded-full blur-md animate-pulse"
+                  className="absolute inset-0 w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full blur-md animate-pulse"
                   style={{
                     background: 'radial-gradient(circle, rgba(220, 38, 38, 0.6) 0%, transparent 70%)',
                   }}
                 />
                 {/* Wax seal */}
                 <div
-                  className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center shadow-xl"
+                  className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-xl"
                   style={{
                     background: 'radial-gradient(circle at 30% 30%, #ef4444 0%, #dc2626 50%, #b91c1c 100%)',
                     boxShadow: '0 8px 25px -5px rgba(185, 28, 28, 0.6), inset 0 -2px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.2)',
@@ -171,7 +171,7 @@ export function EnvelopeTemplate({ page }: EnvelopeTemplateProps) {
                   <div className="absolute inset-0 rounded-full opacity-20">
                     <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-black opacity-30" />
                   </div>
-                  <span className="relative text-white text-2xl sm:text-3xl drop-shadow-md">♥</span>
+                  <span className="relative text-white text-xl sm:text-2xl md:text-3xl drop-shadow-md">♥</span>
                 </div>
               </div>
             </div>
@@ -195,10 +195,10 @@ export function EnvelopeTemplate({ page }: EnvelopeTemplateProps) {
                 }}
               />
 
-              <div className="relative p-5 sm:p-6">
-                <div className="text-center space-y-4 sm:space-y-5">
+              <div className="relative p-4 sm:p-5 md:p-6">
+                <div className="text-center space-y-3 sm:space-y-4 md:space-y-5">
                   {/* Decorative top */}
-                  <div className="flex justify-center gap-2 text-xl sm:text-2xl text-pink-400">
+                  <div className="flex justify-center gap-2 text-lg sm:text-xl md:text-2xl text-pink-400">
                     <span>♥</span>
                     <span>♥</span>
                     <span>♥</span>
@@ -207,7 +207,7 @@ export function EnvelopeTemplate({ page }: EnvelopeTemplateProps) {
                   {/* Recipient */}
                   {page.recipient_name && (
                     <p
-                      className="text-base sm:text-lg text-pink-600"
+                      className="text-sm sm:text-base md:text-lg text-pink-600 px-2"
                       style={{ fontFamily: 'Caveat, cursive' }}
                     >
                       My Dearest {page.recipient_name},
@@ -216,7 +216,7 @@ export function EnvelopeTemplate({ page }: EnvelopeTemplateProps) {
 
                   {/* Title */}
                   <h1
-                    className="text-2xl sm:text-3xl text-pink-600 py-1"
+                    className="text-xl sm:text-2xl md:text-3xl text-pink-600 py-1 px-2"
                     style={{ fontFamily: 'Caveat, cursive' }}
                   >
                     {page.title}
@@ -231,7 +231,7 @@ export function EnvelopeTemplate({ page }: EnvelopeTemplateProps) {
 
                   {/* Message */}
                   <div
-                    className="py-3 sm:py-4 text-gray-700 whitespace-pre-wrap leading-relaxed text-base sm:text-lg"
+                    className="py-2 sm:py-3 md:py-4 px-2 text-gray-700 whitespace-pre-wrap leading-relaxed text-sm sm:text-base md:text-lg"
                     style={{ fontFamily: 'Caveat, cursive' }}
                   >
                     {page.message}
@@ -239,15 +239,15 @@ export function EnvelopeTemplate({ page }: EnvelopeTemplateProps) {
 
                   {/* Sender */}
                   {page.sender_name && (
-                    <div className="pt-2">
+                    <div className="pt-2 px-2">
                       <p
-                        className="text-lg sm:text-xl text-pink-600"
+                        className="text-base sm:text-lg md:text-xl text-pink-600"
                         style={{ fontFamily: 'Caveat, cursive' }}
                       >
                         Forever Yours,
                       </p>
                       <p
-                        className="text-xl sm:text-2xl text-pink-700 mt-1"
+                        className="text-lg sm:text-xl md:text-2xl text-pink-700 mt-1"
                         style={{ fontFamily: 'Caveat, cursive' }}
                       >
                         {page.sender_name}
@@ -256,7 +256,7 @@ export function EnvelopeTemplate({ page }: EnvelopeTemplateProps) {
                   )}
 
                   {/* Bottom heart */}
-                  <div className="text-2xl sm:text-3xl text-pink-500 pt-2">💕</div>
+                  <div className="text-xl sm:text-2xl md:text-3xl text-pink-500 pt-2">💕</div>
                 </div>
               </div>
             </div>
@@ -281,9 +281,9 @@ export function EnvelopeTemplate({ page }: EnvelopeTemplateProps) {
 
         {/* Sender hint */}
         {!isOpen && page.sender_name && (
-          <div className="text-center mt-6">
-            <div className="inline-block bg-white/60 backdrop-blur-sm rounded-full px-5 py-2 shadow-md border border-pink-200">
-              <p className="text-pink-500 text-sm sm:text-base">
+          <div className="text-center mt-4 sm:mt-6 px-4">
+            <div className="inline-block bg-white/60 backdrop-blur-sm rounded-full px-4 sm:px-5 py-1.5 sm:py-2 shadow-md border border-pink-200">
+              <p className="text-pink-500 text-xs sm:text-sm md:text-base">
                 From: <span className="font-semibold text-pink-600">{page.sender_name}</span> 💕
               </p>
             </div>

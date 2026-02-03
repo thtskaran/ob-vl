@@ -99,35 +99,35 @@ export function Creator() {
     return (
       <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
         <Confetti trigger={true} />
-        {/* Success page GIF decorations */}
-        <div className="absolute top-10 left-10 animate-bounce opacity-80">
-          <img src="/7102e1771b31ce3665a3f15522a603b6.gif" alt="celebration" className="w-28 h-28 object-contain" />
+        {/* Success page GIF decorations - responsive sizing */}
+        <div className="absolute top-4 sm:top-10 left-4 sm:left-10 animate-bounce opacity-80">
+          <img src="/7102e1771b31ce3665a3f15522a603b6.gif" alt="celebration" className="w-16 h-16 sm:w-28 sm:h-28 object-contain" />
         </div>
-        <div className="absolute top-10 right-10 animate-bounce opacity-80" style={{ animationDelay: '0.2s' }}>
-          <img src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif" alt="celebration" className="w-28 h-28 object-contain" />
+        <div className="absolute top-4 sm:top-10 right-4 sm:right-10 animate-bounce opacity-80" style={{ animationDelay: '0.2s' }}>
+          <img src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif" alt="celebration" className="w-16 h-16 sm:w-28 sm:h-28 object-contain" />
         </div>
-        <div className="absolute bottom-10 left-1/4 animate-wiggle opacity-70">
+        <div className="absolute bottom-10 left-1/4 animate-wiggle opacity-70 hidden sm:block">
           <img src="/7102e1771b31ce3665a3f15522a603b6.gif" alt="celebration" className="w-24 h-24 object-contain" />
         </div>
-        <div className="absolute bottom-10 right-1/4 animate-wiggle-delayed opacity-70">
+        <div className="absolute bottom-10 right-1/4 animate-wiggle-delayed opacity-70 hidden sm:block">
           <img src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif" alt="celebration" className="w-24 h-24 object-contain" />
         </div>
 
         <Card variant="elevated" className="max-w-md w-full text-center relative z-10">
           <CardHeader>
-            <div className="text-6xl mb-4 animate-bounce-gentle">💕</div>
-            <CardTitle>Your page is ready!</CardTitle>
+            <div className="text-4xl sm:text-6xl mb-4 animate-bounce-gentle">💕</div>
+            <CardTitle className="text-xl sm:text-2xl">Your page is ready!</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-gray-600">
+            <p className="text-sm sm:text-base text-gray-600">
               Share this link with your special someone:
             </p>
-            <div className="bg-pink-50 rounded-2xl p-4 break-all">
+            <div className="bg-pink-50 rounded-2xl p-3 sm:p-4 break-all">
               <a
                 href={result.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-pink-600 hover:text-pink-700 font-medium"
+                className="text-sm sm:text-base text-pink-600 hover:text-pink-700 font-medium"
               >
                 {result.url}
               </a>
@@ -173,10 +173,10 @@ export function Creator() {
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl sm:text-5xl font-display text-gradient-valentine mb-2">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-display text-gradient-valentine mb-2 px-4">
             Create Your Valentine
           </h1>
-          <p className="text-pink-600">
+          <p className="text-sm sm:text-base text-pink-600 px-4">
             Make someone's day special with a personalized love note
           </p>
         </div>
@@ -187,7 +187,7 @@ export function Creator() {
             {['template', 'content', 'slug'].map((s, i) => (
               <div key={s} className="flex items-center">
                 <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors
+                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-sm sm:text-base font-medium transition-colors
                     ${step === s || ['template', 'content', 'slug'].indexOf(step) > i
                       ? 'bg-pink-500 text-white'
                       : 'bg-pink-100 text-pink-400'
@@ -220,7 +220,7 @@ export function Creator() {
                 {step === 'slug' && 'Pick Your URL'}
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-4">
               {step === 'template' && (
                 <TemplateSelector
                   selected={templateId}
@@ -255,9 +255,9 @@ export function Creator() {
               )}
 
               {/* Navigation */}
-              <div className="flex gap-3 pt-4">
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 {step !== 'template' && (
-                  <Button variant="secondary" onClick={handleBack}>
+                  <Button variant="secondary" onClick={handleBack} className="sm:w-auto">
                     Back
                   </Button>
                 )}
@@ -275,6 +275,22 @@ export function Creator() {
                     Create Page
                   </Button>
                 )}
+              </div>
+
+              {/* Obvix Labs Promo */}
+              <div className="mt-6 pt-4 border-t border-pink-200/50 text-center">
+                <p className="text-xs sm:text-sm text-gray-600">
+                  If you are a business owner, entrepreneur or founder check out:{' '}
+                  <a
+                    href="https://obvix.io"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-pink-600 hover:text-pink-700 font-semibold underline decoration-pink-300 hover:decoration-pink-500 transition-colors"
+                  >
+                    obvix.io
+                  </a>
+                  {' '}— we can help automate solutions for you
+                </p>
               </div>
             </CardContent>
           </Card>

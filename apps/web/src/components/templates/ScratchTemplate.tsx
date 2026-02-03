@@ -263,16 +263,16 @@ export function ScratchTemplate({ page }: ScratchTemplateProps) {
 
       <div className="w-full max-w-md sm:max-w-lg mx-auto space-y-4 sm:space-y-6 relative z-10">
         {/* Header */}
-        <div className="text-center space-y-3">
+        <div className="text-center space-y-2 sm:space-y-3 px-4">
           {page.recipient_name && (
-            <div className="inline-block bg-white/80 backdrop-blur-sm rounded-full px-5 py-2 shadow-lg border border-pink-200">
-              <p className="text-pink-600 text-sm sm:text-base">
+            <div className="inline-block bg-white/80 backdrop-blur-sm rounded-full px-4 sm:px-5 py-1.5 sm:py-2 shadow-lg border border-pink-200">
+              <p className="text-pink-600 text-xs sm:text-sm md:text-base">
                 A special surprise for <span className="font-bold">{page.recipient_name}</span> 💝
               </p>
             </div>
           )}
           <div className="inline-block">
-            <h2 className="text-pink-600 text-xl sm:text-2xl font-bold flex items-center justify-center gap-2">
+            <h2 className="text-pink-600 text-base sm:text-xl md:text-2xl font-bold flex items-center justify-center gap-2">
               {isRevealed ? (
                 <>
                   <span className="animate-bounce">🎉</span>
@@ -292,9 +292,9 @@ export function ScratchTemplate({ page }: ScratchTemplateProps) {
 
         {/* Progress bar */}
         {!isRevealed && (
-          <div className="px-4">
+          <div className="px-4 sm:px-6">
             <div className="relative">
-              <div className="w-full bg-gradient-to-r from-pink-100 via-rose-100 to-pink-100 rounded-full h-3 sm:h-3.5 overflow-hidden shadow-inner border border-pink-200">
+              <div className="w-full bg-gradient-to-r from-pink-100 via-rose-100 to-pink-100 rounded-full h-2.5 sm:h-3 md:h-3.5 overflow-hidden shadow-inner border border-pink-200">
                 <div
                   className="h-full rounded-full transition-all duration-300 ease-out relative overflow-hidden"
                   style={{
@@ -365,13 +365,13 @@ export function ScratchTemplate({ page }: ScratchTemplateProps) {
               </div>
 
               {page.recipient_name && (
-                <p className="text-base sm:text-lg text-pink-600">
+                <p className="text-sm sm:text-base md:text-lg text-pink-600 px-2">
                   For {page.recipient_name}
                 </p>
               )}
 
               <h1
-                className="text-2xl sm:text-3xl text-pink-600 leading-tight"
+                className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-pink-600 leading-tight px-2"
                 style={{ fontFamily: 'Pacifico, cursive' }}
               >
                 {page.title}
@@ -383,20 +383,20 @@ export function ScratchTemplate({ page }: ScratchTemplateProps) {
                 <div className="h-px w-12 bg-pink-300" />
               </div>
 
-              <div className="py-2 sm:py-4 text-gray-700 whitespace-pre-wrap text-sm sm:text-base leading-relaxed">
+              <div className="py-2 sm:py-3 md:py-4 px-3 sm:px-4 text-gray-700 whitespace-pre-wrap text-xs sm:text-sm md:text-base leading-relaxed">
                 {page.message}
               </div>
 
               {page.sender_name && (
                 <p
-                  className="text-lg sm:text-xl text-pink-500"
+                  className="text-base sm:text-lg md:text-xl text-pink-500 px-2"
                   style={{ fontFamily: 'Pacifico, cursive' }}
                 >
                   With love, {page.sender_name}
                 </p>
               )}
 
-              <div className="text-3xl sm:text-4xl">💕</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl">💕</div>
             </div>
           </div>
 
@@ -426,12 +426,13 @@ export function ScratchTemplate({ page }: ScratchTemplateProps) {
 
         {/* Hint for mobile */}
         {!isRevealed && (
-          <div className="text-center">
-            <div className="inline-block bg-white/70 backdrop-blur-sm rounded-full px-4 py-2 shadow-md border border-pink-200">
-              <p className="text-xs sm:text-sm text-pink-500 flex items-center gap-2">
-                <span className="animate-wiggle">👆</span>
-                <span>Use your finger or mouse to scratch</span>
-                <span className="animate-wiggle-delayed">👆</span>
+          <div className="text-center px-4">
+            <div className="inline-block bg-white/70 backdrop-blur-sm rounded-full px-3 sm:px-4 py-1.5 sm:py-2 shadow-md border border-pink-200">
+              <p className="text-xs sm:text-sm text-pink-500 flex items-center gap-1 sm:gap-2">
+                <span className="animate-wiggle text-base sm:text-lg">👆</span>
+                <span className="hidden sm:inline">Use your finger or mouse to scratch</span>
+                <span className="sm:hidden">Scratch to reveal</span>
+                <span className="animate-wiggle-delayed text-base sm:text-lg">👆</span>
               </p>
             </div>
           </div>
@@ -439,9 +440,9 @@ export function ScratchTemplate({ page }: ScratchTemplateProps) {
 
         {/* Sender attribution */}
         {page.sender_name && !isRevealed && (
-          <div className="text-center">
-            <div className="inline-block bg-white/60 backdrop-blur-sm rounded-full px-5 py-2 shadow-md border border-pink-200">
-              <p className="text-pink-500 text-sm font-medium">
+          <div className="text-center px-4">
+            <div className="inline-block bg-white/60 backdrop-blur-sm rounded-full px-4 sm:px-5 py-1.5 sm:py-2 shadow-md border border-pink-200">
+              <p className="text-pink-500 text-xs sm:text-sm md:text-base font-medium">
                 From: <span className="font-bold text-pink-600">{page.sender_name}</span> 💕
               </p>
             </div>

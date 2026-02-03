@@ -69,17 +69,17 @@ export function SlugChecker({
         <label className="block text-sm font-medium text-pink-700 mb-1">
           Choose your custom URL
         </label>
-        <div className="flex items-center gap-2">
-          <span className="text-pink-400 text-sm whitespace-nowrap">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+          <span className="text-pink-400 text-xs sm:text-sm whitespace-nowrap">
             special.obvix.io/
           </span>
-          <div className="relative flex-1">
+          <div className="relative flex-1 w-full">
             <Input
               value={value}
               onChange={handleChange}
               placeholder="your-custom-slug"
               maxLength={50}
-              className="pr-10"
+              className="pr-10 text-sm sm:text-base"
             />
             <div className="absolute right-3 top-1/2 -translate-y-1/2">
               {getStatusIcon()}
@@ -110,16 +110,16 @@ export function SlugChecker({
       {/* Suggestions */}
       {result && !result.available && result.suggestions.length > 0 && (
         <div className="mt-3">
-          <p className="text-sm text-pink-600 mb-2">Try these instead:</p>
+          <p className="text-xs sm:text-sm text-pink-600 mb-2">Try these instead:</p>
           <div className="flex flex-wrap gap-2">
             {result.suggestions.map((suggestion) => (
               <button
                 key={suggestion}
                 type="button"
                 onClick={() => handleSuggestionClick(suggestion)}
-                className="px-4 py-2 text-sm bg-gradient-to-r from-pink-400 to-rose-400 text-white
+                className="px-3 sm:px-4 py-2 text-xs sm:text-sm bg-gradient-to-r from-pink-400 to-rose-400 text-white
                          rounded-full hover:from-pink-500 hover:to-rose-500 hover:scale-105
-                         active:scale-98 transition-all duration-200
+                         active:scale-98 transition-all duration-200 min-h-[44px]
                          shadow-[0_2px_10px_rgba(244,114,182,0.3)]
                          hover:shadow-[0_4px_14px_rgba(244,114,182,0.4)]"
               >

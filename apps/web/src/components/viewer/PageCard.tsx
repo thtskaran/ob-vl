@@ -50,26 +50,26 @@ export function PageCard({ page }: PageCardProps) {
   const isClassic = page.template_id === 'classic' || !page.template_id
 
   return (
-    <div className="w-full max-w-lg sm:max-w-2xl mx-auto px-4 sm:px-0">
+    <div className="w-full max-w-lg sm:max-w-2xl mx-auto px-4">
       {/* Floating decorative elements */}
       <div className="relative">
         {/* Classic template - floating hearts */}
         {isClassic && (
           <>
-            <div className="absolute -top-8 -left-8 text-4xl animate-float opacity-70" style={{ color: styles.primaryColor }}>💕</div>
-            <div className="absolute -top-12 -right-12 text-5xl animate-float-delayed opacity-70" style={{ color: styles.accentColor }}>💖</div>
+            <div className="absolute -top-6 sm:-top-8 -left-6 sm:-left-8 text-3xl sm:text-4xl animate-float opacity-70 hidden sm:block" style={{ color: styles.primaryColor }}>💕</div>
+            <div className="absolute -top-8 sm:-top-12 -right-8 sm:-right-12 text-4xl sm:text-5xl animate-float-delayed opacity-70 hidden sm:block" style={{ color: styles.accentColor }}>💖</div>
           </>
         )}
         {isPlayful && (
           <>
-            <div className="absolute -top-8 -left-8 text-4xl animate-wiggle opacity-80">🎈</div>
-            <div className="absolute -top-12 -right-12 text-5xl animate-wiggle-delayed opacity-80">✨</div>
+            <div className="absolute -top-6 sm:-top-8 -left-6 sm:-left-8 text-3xl sm:text-4xl animate-wiggle opacity-80 hidden sm:block">🎈</div>
+            <div className="absolute -top-8 sm:-top-12 -right-8 sm:-right-12 text-4xl sm:text-5xl animate-wiggle-delayed opacity-80 hidden sm:block">✨</div>
           </>
         )}
         {isElegant && (
           <>
-            <div className="absolute -top-10 left-8 text-3xl animate-float opacity-60">🌹</div>
-            <div className="absolute -top-10 right-8 text-3xl animate-float-delayed opacity-60">🌹</div>
+            <div className="absolute -top-8 sm:-top-10 left-6 sm:left-8 text-2xl sm:text-3xl animate-float opacity-60 hidden sm:block">🌹</div>
+            <div className="absolute -top-8 sm:-top-10 right-6 sm:right-8 text-2xl sm:text-3xl animate-float-delayed opacity-60 hidden sm:block">🌹</div>
           </>
         )}
 
@@ -174,8 +174,8 @@ export function PageCard({ page }: PageCardProps) {
             </div>
           )}
 
-          <div className="relative p-6 sm:p-8 md:p-10">
-            <div className="text-center space-y-5 sm:space-y-6">
+          <div className="relative p-5 sm:p-6 md:p-8 lg:p-10">
+            <div className="text-center space-y-4 sm:space-y-5 md:space-y-6">
               {/* Decorative header - unique per template */}
               {isPlayful ? (
                 <div className="flex justify-center gap-2 sm:gap-3 text-3xl sm:text-4xl">
@@ -206,9 +206,9 @@ export function PageCard({ page }: PageCardProps) {
 
               {/* Recipient */}
               {page.recipient_name && (
-                <div className="space-y-1">
+                <div className="space-y-1 px-4">
                   <p
-                    className="text-sm sm:text-base uppercase tracking-wider font-semibold"
+                    className="text-xs sm:text-sm uppercase tracking-wider font-semibold"
                     style={{
                       color: styles.accentColor,
                       opacity: 0.8,
@@ -218,7 +218,7 @@ export function PageCard({ page }: PageCardProps) {
                     To
                   </p>
                   <p
-                    className="text-xl sm:text-2xl font-bold"
+                    className="text-lg sm:text-xl md:text-2xl font-bold"
                     style={{
                       color: styles.primaryColor,
                       fontFamily: 'Nunito, sans-serif',
@@ -238,7 +238,7 @@ export function PageCard({ page }: PageCardProps) {
                   </>
                 )}
                 <h1
-                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl px-2 leading-tight"
+                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl px-4 leading-tight"
                   style={{
                     fontFamily: styles.font,
                     color: styles.primaryColor,
@@ -277,17 +277,17 @@ export function PageCard({ page }: PageCardProps) {
 
               {/* Message with subtle background */}
               <div
-                className="relative py-6 sm:py-8 px-4 sm:px-6 rounded-3xl"
+                className="relative py-4 sm:py-6 md:py-8 px-4 sm:px-5 md:px-6 rounded-2xl sm:rounded-3xl"
                 style={{
                   backgroundColor: `${styles.secondaryColor}60`,
                   backdropFilter: 'blur(10px)',
                 }}
               >
                 <div
-                  className="text-base sm:text-lg whitespace-pre-wrap break-words leading-relaxed"
+                  className="text-sm sm:text-base md:text-lg whitespace-pre-wrap break-words leading-relaxed"
                   style={{
                     fontFamily: page.template_id === 'playful' ? 'Caveat, cursive' : 'Nunito, sans-serif',
-                    fontSize: page.template_id === 'playful' ? '1.25rem' : undefined,
+                    fontSize: page.template_id === 'playful' ? '1.125rem' : undefined,
                     color: '#4a3728',
                   }}
                 >
@@ -297,9 +297,9 @@ export function PageCard({ page }: PageCardProps) {
 
               {/* Sender */}
               {page.sender_name && (
-                <div className="space-y-2 pt-4">
+                <div className="space-y-2 pt-4 px-4">
                   <p
-                    className="text-sm sm:text-base uppercase tracking-wider font-semibold"
+                    className="text-xs sm:text-sm uppercase tracking-wider font-semibold"
                     style={{
                       color: styles.accentColor,
                       opacity: 0.8,
@@ -309,7 +309,7 @@ export function PageCard({ page }: PageCardProps) {
                     With Love
                   </p>
                   <p
-                    className="text-2xl sm:text-3xl"
+                    className="text-xl sm:text-2xl md:text-3xl"
                     style={{
                       fontFamily: styles.font,
                       color: styles.primaryColor,

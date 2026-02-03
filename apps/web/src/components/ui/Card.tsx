@@ -15,7 +15,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     return (
       <div
         ref={ref}
-        className={`rounded-3xl p-6 ${variants[variant]} ${className}`}
+        className={`rounded-2xl sm:rounded-3xl p-4 sm:p-6 ${variants[variant]} ${className}`}
         {...props}
       >
         {children}
@@ -47,7 +47,7 @@ export const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
     return (
       <h3
         ref={ref}
-        className={`text-2xl font-display text-pink-600 ${className}`}
+        className={`text-xl sm:text-2xl font-display text-pink-600 ${className}`}
         {...props}
       >
         {children}

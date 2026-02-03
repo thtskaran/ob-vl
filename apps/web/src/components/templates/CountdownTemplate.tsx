@@ -75,13 +75,13 @@ export function CountdownTemplate({ page }: CountdownTemplateProps) {
               </div>
 
               {page.recipient_name && (
-                <p className="text-lg sm:text-xl text-pink-600">
+                <p className="text-base sm:text-lg md:text-xl text-pink-600 px-4">
                   Dear <span className="font-semibold">{page.recipient_name}</span>,
                 </p>
               )}
 
               <h1
-                className="text-3xl sm:text-4xl md:text-5xl text-pink-600 leading-tight px-2"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-pink-600 leading-tight px-4"
                 style={{ fontFamily: 'Pacifico, cursive' }}
               >
                 {page.title}
@@ -94,7 +94,7 @@ export function CountdownTemplate({ page }: CountdownTemplateProps) {
               </div>
 
               <div
-                className="py-4 sm:py-6 px-2 text-base sm:text-lg text-gray-700 whitespace-pre-wrap leading-relaxed"
+                className="py-3 sm:py-4 md:py-6 px-4 text-sm sm:text-base md:text-lg text-gray-700 whitespace-pre-wrap leading-relaxed"
                 style={{ fontFamily: 'Nunito, sans-serif' }}
               >
                 {page.message}
@@ -102,7 +102,7 @@ export function CountdownTemplate({ page }: CountdownTemplateProps) {
 
               {page.sender_name && (
                 <p
-                  className="text-xl sm:text-2xl text-pink-600"
+                  className="text-lg sm:text-xl md:text-2xl text-pink-600 px-4"
                   style={{ fontFamily: 'Pacifico, cursive' }}
                 >
                   With all my love, {page.sender_name}
@@ -183,17 +183,17 @@ export function CountdownTemplate({ page }: CountdownTemplateProps) {
             {/* Header */}
             <div className="space-y-3">
               {page.recipient_name && (
-                <div>
+                <div className="px-4">
                   <p className="text-xs sm:text-sm uppercase tracking-wider text-rose-400 mb-1">For</p>
-                  <div className="inline-block bg-gradient-to-r from-pink-100 to-rose-100 rounded-full px-5 py-2 shadow-md">
-                    <p className="text-pink-600 font-bold text-lg sm:text-xl">
+                  <div className="inline-block bg-gradient-to-r from-pink-100 to-rose-100 rounded-full px-4 sm:px-5 py-1.5 sm:py-2 shadow-md">
+                    <p className="text-pink-600 font-bold text-base sm:text-lg md:text-xl">
                       {page.recipient_name}
                     </p>
                   </div>
                 </div>
               )}
               <h1
-                className="text-2xl sm:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-rose-600 to-pink-600 py-1"
+                className="text-xl sm:text-2xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-rose-600 to-pink-600 py-1 px-4"
                 style={{ fontFamily: 'Pacifico, cursive' }}
               >
                 A Special Message Awaits
@@ -222,7 +222,7 @@ export function CountdownTemplate({ page }: CountdownTemplateProps) {
               {/* Timer container */}
               <div className="relative">
                 <div
-                  className="w-32 h-32 sm:w-40 sm:h-40 mx-auto rounded-full flex items-center justify-center shadow-2xl relative overflow-hidden"
+                  className="w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 mx-auto rounded-full flex items-center justify-center shadow-2xl relative overflow-hidden"
                   style={{
                     background: 'linear-gradient(135deg, #ec4899 0%, #f43f5e 50%, #e11d48 100%)',
                     boxShadow: '0 20px 50px -10px rgba(236, 72, 153, 0.6), inset 0 -4px 12px rgba(0, 0, 0, 0.2), inset 0 4px 12px rgba(255, 255, 255, 0.2)',
@@ -237,7 +237,7 @@ export function CountdownTemplate({ page }: CountdownTemplateProps) {
 
                   {/* Number */}
                   <span
-                    className="relative text-6xl sm:text-7xl font-bold text-white drop-shadow-2xl animate-pulse-scale"
+                    className="relative text-5xl sm:text-6xl md:text-7xl font-bold text-white drop-shadow-2xl animate-pulse-scale"
                     style={{ fontFamily: 'Nunito, sans-serif' }}
                   >
                     {timeLeft}
@@ -262,18 +262,18 @@ export function CountdownTemplate({ page }: CountdownTemplateProps) {
             </div>
 
             {/* Teaser text */}
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3 px-4">
               <div className="min-h-[32px] flex items-center justify-center">
-                <div className="inline-block bg-gradient-to-r from-pink-100 to-rose-100 rounded-full px-5 py-2 shadow-md">
-                  <p className="text-pink-600 text-base sm:text-lg font-semibold">
+                <div className="inline-block bg-gradient-to-r from-pink-100 to-rose-100 rounded-full px-4 sm:px-5 py-1.5 sm:py-2 shadow-md">
+                  <p className="text-pink-600 text-sm sm:text-base md:text-lg font-semibold">
                     {getMessage()}
                   </p>
                 </div>
               </div>
 
               {page.sender_name && (
-                <div className="inline-block bg-white/70 backdrop-blur-sm rounded-full px-4 py-1.5 shadow-sm">
-                  <p className="text-pink-500 text-sm">
+                <div className="inline-block bg-white/70 backdrop-blur-sm rounded-full px-3 sm:px-4 py-1 sm:py-1.5 shadow-sm">
+                  <p className="text-pink-500 text-xs sm:text-sm">
                     From someone special 💕
                   </p>
                 </div>
@@ -281,10 +281,10 @@ export function CountdownTemplate({ page }: CountdownTemplateProps) {
             </div>
 
             {/* Skip button */}
-            <div className="pt-2">
+            <div className="pt-2 px-4">
               <button
                 onClick={handleSkip}
-                className="text-pink-500 text-sm hover:text-pink-600 transition-all underline underline-offset-2 hover:underline-offset-4 font-medium"
+                className="text-pink-500 text-xs sm:text-sm hover:text-pink-600 transition-all underline underline-offset-2 hover:underline-offset-4 font-medium min-h-[44px] py-2"
               >
                 Can't wait? Reveal now →
               </button>

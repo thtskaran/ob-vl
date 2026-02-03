@@ -136,14 +136,14 @@ export function TemplateSelector({ selected, onSelect }: TemplateSelectorProps) 
     <div className="space-y-4">
       {/* Interactive templates section */}
       <div>
-        <h3 className="text-sm font-medium text-pink-600 mb-3 flex items-center gap-2">
+        <h3 className="text-xs sm:text-sm font-medium text-pink-600 mb-3 flex items-center gap-2">
           <span className="animate-pulse">✨</span>
           Interactive Templates
-          <span className="text-xs bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full">
+          <span className="text-xs bg-pink-100 text-pink-600 px-1.5 sm:px-2 py-0.5 rounded-full">
             New!
           </span>
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-3 sm:gap-4">
           {sortedTemplates.filter(t => t.interactive).map((template) => (
             <Card
               key={template.id}
@@ -157,16 +157,16 @@ export function TemplateSelector({ selected, onSelect }: TemplateSelectorProps) 
               `}
               onClick={() => onSelect(template.id)}
             >
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-2 sm:gap-3">
                 <div
-                  className="w-12 h-12 rounded-full flex items-center justify-center text-2xl shadow-md"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-xl sm:text-2xl shadow-md flex-shrink-0"
                   style={{ backgroundColor: template.primary_color }}
                 >
                   {templateIcons[template.id] || '♥'}
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4
-                    className="font-semibold text-lg"
+                    className="font-semibold text-base sm:text-lg"
                     style={{
                       fontFamily: template.font === 'Pacifico' ? 'Pacifico, cursive' :
                                   template.font === 'Caveat' ? 'Caveat, cursive' :
@@ -176,14 +176,14 @@ export function TemplateSelector({ selected, onSelect }: TemplateSelectorProps) 
                   >
                     {template.name}
                   </h4>
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1">
                     {template.description}
                   </p>
                 </div>
               </div>
               {selected === template.id && (
                 <div className="absolute top-2 right-2 text-pink-500">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 </div>
@@ -212,16 +212,16 @@ export function TemplateSelector({ selected, onSelect }: TemplateSelectorProps) 
               `}
               onClick={() => onSelect(template.id)}
             >
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-2 sm:gap-3">
                 <div
-                  className="w-12 h-12 rounded-full flex items-center justify-center text-2xl shadow-md"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-xl sm:text-2xl shadow-md flex-shrink-0"
                   style={{ backgroundColor: template.primary_color }}
                 >
                   {templateIcons[template.id] || '♥'}
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4
-                    className="font-semibold text-lg"
+                    className="font-semibold text-base sm:text-lg"
                     style={{
                       fontFamily: template.font === 'Pacifico' ? 'Pacifico, cursive' :
                                   template.font === 'Caveat' ? 'Caveat, cursive' :
@@ -231,14 +231,14 @@ export function TemplateSelector({ selected, onSelect }: TemplateSelectorProps) 
                   >
                     {template.name}
                   </h4>
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="text-xs sm:text-sm text-gray-600 mt-0.5 sm:mt-1">
                     {template.description}
                   </p>
                 </div>
               </div>
               {selected === template.id && (
                 <div className="absolute top-2 right-2 text-pink-500">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 </div>
