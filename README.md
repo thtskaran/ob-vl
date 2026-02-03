@@ -62,7 +62,7 @@ cp apps/web/.env.example apps/web/.env
 
 # 2. Build and start all services
 docker compose build
-docker compose up -d
+docker compose up -d --scale worker=2
 
 # 3. Verify services are running
 docker compose ps

@@ -64,7 +64,7 @@ nano apps/web/.env
 
 # 2. Build and start
 docker compose build
-docker compose up -d
+docker compose up -d --scale worker=2
 
 # 3. Verify
 docker compose ps

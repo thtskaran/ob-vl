@@ -43,7 +43,7 @@ build:
 
 start:
 	@echo "Starting production services..."
-	docker compose up -d
+	docker compose up -d --scale worker=2
 	@echo "Services started!"
 	@make status
 

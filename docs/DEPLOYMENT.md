@@ -237,8 +237,8 @@ docker compose build
 ### 5.2 Start Services
 
 ```bash
-# Start all services in detached mode
-docker compose up -d
+# Start all services (2 worker replicas) in detached mode
+docker compose up -d --scale worker=2
 
 # Check status
 docker compose ps

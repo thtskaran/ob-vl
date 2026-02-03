@@ -75,7 +75,7 @@ success "Docker images built successfully"
 
 # Start services
 step "Starting services..."
-docker compose up -d
+docker compose up -d --scale worker=2
 success "Services started"
 
 # Wait for services to be healthy

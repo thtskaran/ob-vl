@@ -67,7 +67,7 @@ chmod 755 data
 
 ```bash
 docker compose build
-docker compose up -d
+docker compose up -d --scale worker=2
 ```
 
 ### 5. Verify Services
@@ -142,7 +142,7 @@ docker compose restart
 docker compose down
 
 # Start services
-docker compose up -d
+docker compose up -d --scale worker=2
 
 # Update application
 git pull origin main
