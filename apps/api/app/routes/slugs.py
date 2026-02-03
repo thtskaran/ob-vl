@@ -12,7 +12,7 @@ async def check_slug(slug: str, request: Request):
     """Check if a slug is available."""
     # Rate limiting
     client_ip = request.client.host if request.client else "unknown"
-    allowed, retry_after = rate_limiter.check_slug_check(client_ip)
+    allowed, retry_after = await rate_limiter.check_slug_check(client_ip)
 
     if not allowed:
         raise HTTPException(
