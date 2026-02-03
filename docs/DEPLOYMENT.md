@@ -46,13 +46,13 @@ docker --version
 
 ```bash
 # Install Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker compose
 
 # Make executable
-sudo chmod +x /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker compose
 
 # Verify installation
-docker-compose --version
+docker compose --version
 ```
 
 ### 1.3 Configure Firewall
@@ -141,9 +141,9 @@ VITE_PUBLIC_URL=https://special.obvix.cloud
 VITE_APP_ENV=production
 ```
 
-### 3.3 Update docker-compose.yml
+### 3.3 Update docker compose.yml
 
-Edit `docker-compose.yml` to update build args:
+Edit `docker compose.yml` to update build args:
 
 ```yaml
 web:
@@ -167,7 +167,7 @@ web:
 sudo apt install certbot python3-certbot-nginx -y
 
 # Stop any running web server
-docker-compose down
+docker compose down
 
 # Generate certificate
 sudo certbot certonly --standalone -d special.obvix.cloud
@@ -212,7 +212,7 @@ server {
 
 ### 4.2 Mount Certificates in Docker
 
-Update `docker-compose.yml`:
+Update `docker compose.yml`:
 
 ```yaml
 web:
@@ -229,7 +229,7 @@ web:
 
 ```bash
 # Build all images
-docker-compose build
+docker compose build
 
 # This will take 5-10 minutes
 ```
@@ -238,10 +238,10 @@ docker-compose build
 
 ```bash
 # Start all services in detached mode
-docker-compose up -d
+docker compose up -d
 
 # Check status
-docker-compose ps
+docker compose ps
 ```
 
 **Expected output:**
@@ -270,7 +270,7 @@ curl -I http://localhost
 # Expected: HTTP/1.1 301 Moved Permanently (redirects to HTTPS)
 
 # Check logs
-docker-compose logs -f
+docker compose logs -f
 ```
 
 ---
@@ -305,21 +305,21 @@ curl -I https://special.obvix.cloud
 
 ```bash
 # All services
-docker-compose logs -f
+docker compose logs -f
 
 # Specific service
-docker-compose logs -f api
-docker-compose logs -f worker
+docker compose logs -f api
+docker compose logs -f worker
 
 # Last 100 lines
-docker-compose logs --tail=100 api
+docker compose logs --tail=100 api
 ```
 
 ### 7.2 Check Service Status
 
 ```bash
 # Service status
-docker-compose ps
+docker compose ps
 
 # Resource usage
 docker stats
@@ -372,13 +372,13 @@ chmod +x /home/user/backup.sh
 
 ```bash
 # Stop API
-docker-compose stop api worker
+docker compose stop api worker
 
 # Restore database
 docker cp /home/user/backups/valentine_20240214_020000.db valentine-api:/data/valentine.db
 
 # Restart services
-docker-compose start api worker
+docker compose start api worker
 ```
 
 ---
@@ -392,7 +392,7 @@ docker-compose start api worker
 sudo certbot renew --dry-run
 
 # Add to crontab (check daily)
-(crontab -l 2>/dev/null; echo "0 0 * * * certbot renew --quiet && docker-compose restart web") | crontab -
+(crontab -l 2>/dev/null; echo "0 0 * * * certbot renew --quiet && docker compose restart web") | crontab -
 ```
 
 ### 9.2 Manual Renewal
@@ -402,7 +402,7 @@ sudo certbot renew --dry-run
 sudo certbot renew
 
 # Reload nginx
-docker-compose restart web
+docker compose restart web
 ```
 
 ---
@@ -411,7 +411,7 @@ docker-compose restart web
 
 ### 10.1 Scale Workers
 
-Edit `docker-compose.yml`:
+Edit `docker compose.yml`:
 
 ```yaml
 worker:
@@ -422,7 +422,7 @@ worker:
 
 Apply changes:
 ```bash
-docker-compose up -d --scale worker=4
+docker compose up -d --scale worker=4
 ```
 
 ### 10.2 Scale API
@@ -436,8 +436,8 @@ CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--worker
 
 Rebuild and restart:
 ```bash
-docker-compose build api
-docker-compose up -d api
+docker compose build api
+docker compose up -d api
 ```
 
 ---
@@ -448,7 +448,7 @@ docker-compose up -d api
 
 ```bash
 # Check logs
-docker-compose logs api
+docker compose logs api
 
 # Check database file permissions
 ls -la data/
@@ -461,10 +461,10 @@ sudo chown -R 1000:1000 data/
 
 ```bash
 # Check Redis status
-docker-compose ps redis
+docker compose ps redis
 
 # Check Redis logs
-docker-compose logs redis
+docker compose logs redis
 
 # Test connection
 docker exec valentine-redis redis-cli ping
@@ -474,7 +474,7 @@ docker exec valentine-redis redis-cli ping
 
 ```bash
 # Check worker logs
-docker-compose logs worker
+docker compose logs worker
 
 # Check queue
 docker exec valentine-redis redis-cli -n 2 llen rq:queue:page_creation
@@ -509,9 +509,9 @@ sudo ls -la /etc/letsencrypt/live/special.obvix.cloud/
 docker stats
 
 # Restart Redis (clears cache)
-docker-compose restart redis
+docker compose restart redis
 
-# Reduce Redis memory limit in docker-compose.yml
+# Reduce Redis memory limit in docker compose.yml
 # command: redis-server --maxmemory 128mb
 ```
 
@@ -526,10 +526,10 @@ docker-compose restart redis
 git pull origin main
 
 # Rebuild containers
-docker-compose build
+docker compose build
 
 # Restart with zero downtime
-docker-compose up -d --no-deps --build api worker web
+docker compose up -d --no-deps --build api worker web
 ```
 
 ### Clear Redis Cache
@@ -602,7 +602,7 @@ http {
 
 ### Redis
 
-Edit `docker-compose.yml`:
+Edit `docker compose.yml`:
 
 ```yaml
 redis:
@@ -631,7 +631,7 @@ PRAGMA temp_store=MEMORY;
 ## Monitoring with Prometheus (Optional)
 
 ```bash
-# Add to docker-compose.yml
+# Add to docker compose.yml
 prometheus:
   image: prom/prometheus
   ports:

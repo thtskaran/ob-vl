@@ -56,8 +56,8 @@ check_file "apps/web/.env.example"
 check_file "apps/web/src/components/ErrorBoundary.tsx"
 
 # Infrastructure
-check_file "docker-compose.yml"
-check_file "docker-compose.dev.yml"
+check_file "docker compose.yml"
+check_file "docker compose.dev.yml"
 
 # Documentation
 check_file "README.md"
@@ -139,12 +139,12 @@ else
     ((FAILED++))
 fi
 
-# Check for worker in docker-compose
-if grep -q "worker:" docker-compose.yml; then
-    echo -e "${GREEN}✓${NC} Worker service in docker-compose"
+# Check for worker in docker compose
+if grep -q "worker:" docker compose.yml; then
+    echo -e "${GREEN}✓${NC} Worker service in docker compose"
     ((PASSED++))
 else
-    echo -e "${RED}✗${NC} Worker service not in docker-compose"
+    echo -e "${RED}✗${NC} Worker service not in docker compose"
     ((FAILED++))
 fi
 

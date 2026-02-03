@@ -1,4 +1,7 @@
 
+
+
+
 # Special Page Generator - Technical Specification
 
 ## Overview

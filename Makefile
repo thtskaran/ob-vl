@@ -22,7 +22,7 @@ help:
 # Development
 dev:
 	@echo "Starting development environment..."
-	docker-compose -f docker-compose.dev.yml up -d
+	docker compose -f docker compose.dev.yml up -d
 	@echo "Redis started on port 6379"
 	@echo ""
 	@echo "Start API:    cd apps/api && uvicorn app.main:app --reload"
@@ -38,32 +38,32 @@ install:
 # Production
 build:
 	@echo "Building production images..."
-	docker-compose build
+	docker compose build
 	@echo "Build complete!"
 
 start:
 	@echo "Starting production services..."
-	docker-compose up -d
+	docker compose up -d
 	@echo "Services started!"
 	@make status
 
 stop:
 	@echo "Stopping all services..."
-	docker-compose down
+	docker compose down
 	@echo "Services stopped!"
 
 restart:
 	@echo "Restarting services..."
-	docker-compose restart
+	docker compose restart
 	@echo "Services restarted!"
 
 logs:
-	docker-compose logs -f
+	docker compose logs -f
 
 # Maintenance
 status:
 	@echo "Service Status:"
-	@docker-compose ps
+	@docker compose ps
 	@echo ""
 	@echo "Health Checks:"
 	@docker exec valentine-redis redis-cli ping 2>/dev/null || echo "Redis: DOWN"
@@ -74,7 +74,7 @@ clean:
 	@read -p "Are you sure? [y/N] " -n 1 -r; \
 	echo; \
 	if [[ $$REPLY =~ ^[Yy]$$ ]]; then \
-		docker-compose down -v --rmi all; \
+		docker compose down -v --rmi all; \
 		echo "Cleaned!"; \
 	fi
 

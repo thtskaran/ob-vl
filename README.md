@@ -30,7 +30,7 @@ Create beautiful, shareable Valentine's pages with custom URLs. A production-rea
 npm install
 
 # Start Redis (for development)
-docker-compose -f docker-compose.dev.yml up -d
+docker compose -f docker compose.dev.yml up -d
 
 # Start API (Terminal 1)
 cd apps/api
@@ -61,12 +61,12 @@ cp apps/web/.env.example apps/web/.env
 # Edit .env files with your production values
 
 # 2. Build and start all services
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 
 # 3. Verify services are running
-docker-compose ps
-docker-compose logs -f
+docker compose ps
+docker compose logs -f
 
 # 4. Check health
 curl http://localhost:8000/health
@@ -100,8 +100,8 @@ ob-vl/
 │       └── nginx.conf
 ├── data/                       # SQLite database (persistent)
 ├── docs/                       # Documentation
-├── docker-compose.yml          # Production compose
-├── docker-compose.dev.yml      # Development compose
+├── docker compose.yml          # Production compose
+├── docker compose.dev.yml      # Development compose
 └── README.md
 ```
 
@@ -217,10 +217,10 @@ React error boundaries at multiple levels:
 
 ```bash
 # View logs
-docker-compose logs -f
+docker compose logs -f
 
 # Check service status
-docker-compose ps
+docker compose ps
 
 # Redis info
 docker exec valentine-redis redis-cli info
@@ -279,11 +279,11 @@ done
 ## Common Issues
 
 ### Redis Connection Failed
-- Ensure Redis is running: `docker-compose ps redis`
+- Ensure Redis is running: `docker compose ps redis`
 - Check Redis health: `docker exec valentine-redis redis-cli ping`
 
 ### Worker Not Processing Jobs
-- Check worker logs: `docker-compose logs worker`
+- Check worker logs: `docker compose logs worker`
 - Verify Redis connection: `docker exec valentine-redis redis-cli -n 2 keys '*'`
 
 ### CORS Errors
@@ -291,9 +291,9 @@ done
 - Ensure origins match exactly (including protocol)
 
 ### Page Creation Slow
-- Check worker count: `docker-compose ps worker`
+- Check worker count: `docker compose ps worker`
 - Monitor queue depth: `docker exec valentine-redis redis-cli -n 2 llen rq:queue:page_creation`
-- Scale workers: Edit `docker-compose.yml` `replicas` value
+- Scale workers: Edit `docker compose.yml` `replicas` value
 
 ## License
 

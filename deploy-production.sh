@@ -70,12 +70,12 @@ success "Data directory ready"
 
 # Build Docker images
 step "Building Docker images (this may take 5-10 minutes)..."
-docker-compose build
+docker compose build
 success "Docker images built successfully"
 
 # Start services
 step "Starting services..."
-docker-compose up -d
+docker compose up -d
 success "Services started"
 
 # Wait for services to be healthy
@@ -84,7 +84,7 @@ sleep 10
 
 # Check service status
 step "Checking service status..."
-docker-compose ps
+docker compose ps
 
 # Verify Redis
 step "Testing Redis connection..."
@@ -104,7 +104,7 @@ for i in {1..30}; do
     fi
     if [ $i -eq 30 ]; then
         error "API health check failed"
-        echo "Check logs with: docker-compose logs api"
+        echo "Check logs with: docker compose logs api"
         exit 1
     fi
     sleep 2
@@ -150,5 +150,5 @@ echo -e "${BLUE}# Configure firewall${NC}"
 echo "sudo ufw allow 22/tcp && sudo ufw allow 80/tcp && sudo ufw allow 443/tcp"
 echo "sudo ufw --force enable"
 echo ""
-echo "View logs: docker-compose logs -f"
-echo "Check status: docker-compose ps"
+echo "View logs: docker compose logs -f"
+echo "Check status: docker compose ps"

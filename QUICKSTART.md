@@ -21,7 +21,7 @@ cd apps/api && pip install -r requirements.txt && cd ../..
 cd apps/web && npm install && cd ../..
 
 # 3. Start Redis
-docker-compose -f docker-compose.dev.yml up -d
+docker compose -f docker compose.dev.yml up -d
 
 # 4. Start API (Terminal 1)
 cd apps/api
@@ -63,15 +63,15 @@ nano apps/web/.env
 # Set: VITE_PUBLIC_URL=https://special.obvix.cloud
 
 # 2. Build and start
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 
 # 3. Verify
-docker-compose ps
+docker compose ps
 curl http://localhost:8000/health
 
 # 4. Check logs
-docker-compose logs -f
+docker compose logs -f
 ```
 
 ## Common Commands
@@ -207,19 +207,19 @@ VITE_APP_ENV=production
 
 ### Redis Connection Failed
 ```bash
-docker-compose ps redis
+docker compose ps redis
 docker exec valentine-redis redis-cli ping
 ```
 
 ### API Not Starting
 ```bash
-docker-compose logs api
+docker compose logs api
 ls -la data/
 ```
 
 ### Workers Not Processing
 ```bash
-docker-compose logs worker
+docker compose logs worker
 docker exec valentine-redis redis-cli -n 2 llen rq:queue:page_creation
 ```
 
@@ -231,10 +231,10 @@ make test-rate-limit
 
 ## Next Steps
 
-1. ✅ Verify all services running: `docker-compose ps`
+1. ✅ Verify all services running: `docker compose ps`
 2. ✅ Check health: `curl http://localhost:8000/health`
 3. ✅ Test page creation in browser: `http://localhost:5173`
-4. ✅ Monitor logs: `docker-compose logs -f`
+4. ✅ Monitor logs: `docker compose logs -f`
 5. ✅ Review documentation: `README.md`, `docs/API.md`, `docs/DEPLOYMENT.md`
 
 ## Resources
@@ -247,6 +247,6 @@ make test-rate-limit
 ---
 
 **Need Help?**
-- Check logs: `docker-compose logs -f`
+- Check logs: `docker compose logs -f`
 - Run verification: `./verify.sh`
 - Check service status: `make status`

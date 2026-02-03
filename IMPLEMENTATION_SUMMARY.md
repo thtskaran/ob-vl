@@ -41,13 +41,13 @@ Production-ready Valentine's App implementation completed successfully.
   - Static asset caching (1 year)
   - Security headers
   - SPA fallback routing
-- ✅ Replaced docker-compose.yml with full production setup:
+- ✅ Replaced docker compose.yml with full production setup:
   - Redis with health checks and memory limits
   - API with 4 uvicorn workers
   - Worker with 2 replicas
   - Web with nginx
   - Proper networking and volume configuration
-- ✅ Created docker-compose.dev.yml for local development
+- ✅ Created docker compose.dev.yml for local development
 
 ### Phase 6: Documentation
 - ✅ Created comprehensive README.md with:
@@ -96,8 +96,8 @@ Production-ready Valentine's App implementation completed successfully.
 11. `/apps/web/src/components/ErrorBoundary.tsx` - Error boundary component
 
 ### Infrastructure
-12. `/docker-compose.yml` - Production compose (replaced)
-13. `/docker-compose.dev.yml` - Development compose
+12. `/docker compose.yml` - Production compose (replaced)
+13. `/docker compose.dev.yml` - Development compose
 
 ### Documentation
 14. `/README.md` - Root documentation
@@ -176,7 +176,7 @@ After deployment, verify:
 
 ```bash
 # 1. Services running
-docker-compose ps
+docker compose ps
 
 # 2. Redis connection
 docker exec valentine-redis redis-cli ping

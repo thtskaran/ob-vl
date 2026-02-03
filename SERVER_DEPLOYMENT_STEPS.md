@@ -72,14 +72,14 @@ chmod +x deploy-production.sh
 ./deploy-production.sh
 
 # Option B: Manual deployment
-docker-compose build
-docker-compose up -d
-docker-compose ps
+docker compose build
+docker compose up -d
+docker compose ps
 ```
 
 **Verify services are running:**
 ```bash
-docker-compose ps
+docker compose ps
 
 # Should show:
 # valentine-api     - Up (healthy)
@@ -244,7 +244,7 @@ sudo ufw status verbose
 
 ```bash
 # 1. Check all Docker services
-docker-compose ps
+docker compose ps
 # All services should show "Up" or "Up (healthy)"
 
 # 2. Test Redis
@@ -267,11 +267,11 @@ sudo certbot certificates
 # Should show valid certificate for special.obvix.cloud
 
 # 7. View logs
-docker-compose logs -f --tail=50
+docker compose logs -f --tail=50
 # Should show no errors
 
 # 8. Check queue workers
-docker-compose logs worker
+docker compose logs worker
 # Should show "Worker started, listening to queue: page_creation"
 ```
 
@@ -320,23 +320,23 @@ EOF
 
 ```bash
 # View application logs
-docker-compose logs -f
+docker compose logs -f
 
 # View specific service logs
-docker-compose logs -f api
-docker-compose logs -f worker
+docker compose logs -f api
+docker compose logs -f worker
 
 # Check service status
-docker-compose ps
+docker compose ps
 
 # Restart services
-docker-compose restart
+docker compose restart
 
 # Stop services
-docker-compose down
+docker compose down
 
 # Start services
-docker-compose up -d
+docker compose up -d
 
 # View Nginx logs
 sudo tail -f /var/log/nginx/special.obvix.cloud.access.log
@@ -361,8 +361,8 @@ docker exec -it valentine-api sqlite3 /data/valentine.db "SELECT COUNT(*) FROM p
 
 ### Docker services won't start
 ```bash
-docker-compose logs
-docker-compose ps
+docker compose logs
+docker compose ps
 sudo systemctl status docker
 ```
 
@@ -399,7 +399,7 @@ curl -v https://special.obvix.cloud
 ### High memory usage
 ```bash
 docker stats
-docker-compose restart redis
+docker compose restart redis
 ```
 
 ---
@@ -412,11 +412,11 @@ cd /home/karan/Documents/projects/ob-vl
 git pull origin main
 
 # Rebuild and restart (zero downtime)
-docker-compose build
-docker-compose up -d --no-deps --build api worker web
+docker compose build
+docker compose up -d --no-deps --build api worker web
 
 # Check logs
-docker-compose logs -f --tail=50
+docker compose logs -f --tail=50
 ```
 
 ---
@@ -442,8 +442,8 @@ After deployment, verify:
 
 If you encounter issues:
 
-1. Check logs: `docker-compose logs -f`
-2. Verify services: `docker-compose ps`
+1. Check logs: `docker compose logs -f`
+2. Verify services: `docker compose ps`
 3. Test endpoints: `curl https://special.obvix.cloud/api/templates`
 4. Check firewall: `sudo ufw status`
 5. Review deployment guide: `docs/DEPLOYMENT.md`
