@@ -4,14 +4,18 @@ from contextlib import asynccontextmanager
 
 from .db.database import init_db
 from .routes import slugs, pages, templates
+from .services.redis_client import redis_client
+from .config import ALLOWED_ORIGINS
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup
     await init_db()
+    await redis_client.connect()
     yield
     # Shutdown
+    await redis_client.close()
 
 
 app = FastAPI(
@@ -21,18 +25,13 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# CORS middleware
+# CORS middleware - dynamically configured via environment
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://localhost:3000",
-        "https://special.obvix.io",
-        "https://dbff56b7902f.ngrok-free.app",
-    ],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PATCH", "DELETE"],
+    allow_headers=["Content-Type", "X-Edit-Token"],
 )
 
 # Include routers

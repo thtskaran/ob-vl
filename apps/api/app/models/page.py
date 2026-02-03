@@ -51,6 +51,21 @@ class PageCreateResponse(BaseModel):
     url: str
 
 
+class PageJobResponse(BaseModel):
+    """Response when page creation is queued."""
+    job_id: str
+    status: str = "queued"
+    message: str = "Your page is being created. Please wait..."
+
+
+class PageJobStatusResponse(BaseModel):
+    """Response for job status polling."""
+    job_id: str
+    status: str  # queued, started, finished, failed
+    result: Optional[PageCreateResponse] = None
+    error: Optional[str] = None
+
+
 class SlugCheckResponse(BaseModel):
     slug: str
     available: bool

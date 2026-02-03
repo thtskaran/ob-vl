@@ -9,7 +9,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 DATA_DIR = BASE_DIR / "data"
 
 # Database
-DATABASE_PATH = DATA_DIR / "valentine.db"
+DATABASE_PATH = os.getenv("DATABASE_PATH", str(DATA_DIR / "valentine.db"))
+
+# Redis
+REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
+
+# CORS - Parse comma-separated origins
+def get_allowed_origins() -> list[str]:
+    """Parse ALLOWED_ORIGINS environment variable."""
+    origins_str = os.getenv("ALLOWED_ORIGINS", "")
+    if not origins_str:
+        return ["http://localhost:5173", "http://localhost:3000"]
+    return [origin.strip() for origin in origins_str.split(",")]
+
+ALLOWED_ORIGINS = get_allowed_origins()
+
+# Frontend domain for generating URLs
+FRONTEND_DOMAIN = os.getenv("FRONTEND_DOMAIN", "https://special.obvix.cloud")
 
 # Rate limiting
 RATE_LIMIT_PAGES_PER_HOUR = int(os.getenv("RATE_LIMIT_PAGES_PER_HOUR", "10"))

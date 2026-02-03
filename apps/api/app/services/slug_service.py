@@ -9,6 +9,7 @@ from ..config import (
     RESERVED_SLUGS,
 )
 from ..db.database import execute_query
+from .cache_service import cache_service
 
 
 def validate_slug_format(slug: str) -> tuple[bool, Optional[str]]:
@@ -43,21 +44,36 @@ async def check_slug_availability(slug: str) -> tuple[bool, Optional[str]]:
     """
     Check if a slug is available.
     Returns (is_available, reason_if_not_available).
+    Uses caching to reduce database queries.
     """
-    # Format validation
+    # Format validation (no caching needed)
     is_valid, error = validate_slug_format(slug)
     if not is_valid:
         return False, error
 
-    # Reserved check
+    # Reserved check (no caching needed)
     if is_reserved_slug(slug):
         return False, "This slug is reserved"
 
-    # Database check
-    if await is_slug_taken(slug):
-        return False, "This slug is already taken"
+    # Check cache first
+    cache_key = f"slug_available:{slug.lower()}"
+    cached_result = await cache_service.get(cache_key)
+    if cached_result is not None:
+        # Cached result: {"available": bool, "reason": str or None}
+        return cached_result["available"], cached_result.get("reason")
 
-    return True, None
+    # Database check
+    is_taken = await is_slug_taken(slug)
+    result = (not is_taken, "This slug is already taken" if is_taken else None)
+
+    # Cache the result for 60 seconds
+    await cache_service.set(
+        cache_key,
+        {"available": result[0], "reason": result[1]},
+        ttl=60
+    )
+
+    return result
 
 
 async def generate_suggestions(base_slug: str, count: int = 5) -> list[str]:

@@ -37,6 +37,19 @@ export interface PageCreateResponse {
   url: string
 }
 
+export interface PageJobResponse {
+  job_id: string
+  status: string
+  message: string
+}
+
+export interface PageJobStatusResponse {
+  job_id: string
+  status: string
+  result?: PageCreateResponse
+  error?: string
+}
+
 export interface SlugCheckResponse {
   slug: string
   available: boolean
@@ -90,11 +103,34 @@ class ApiClient {
   }
 
   // Pages
-  async createPage(data: PageCreateData): Promise<PageCreateResponse> {
+  async createPage(data: PageCreateData): Promise<PageCreateResponse | PageJobResponse> {
     return this.fetch('/pages', {
       method: 'POST',
       body: JSON.stringify(data),
     })
+  }
+
+  async getJobStatus(jobId: string): Promise<PageJobStatusResponse> {
+    return this.fetch(`/pages/job/${encodeURIComponent(jobId)}`)
+  }
+
+  async pollJobUntilComplete(jobId: string, maxAttempts = 30): Promise<PageCreateResponse> {
+    for (let i = 0; i < maxAttempts; i++) {
+      const status = await this.getJobStatus(jobId)
+
+      if (status.status === 'finished' && status.result) {
+        return status.result
+      }
+
+      if (status.status === 'failed') {
+        throw new Error(status.error || 'Job failed')
+      }
+
+      // Wait 1 second before next poll
+      await new Promise(resolve => setTimeout(resolve, 1000))
+    }
+
+    throw new Error('Job timed out')
   }
 
   async getPage(slug: string): Promise<Page> {

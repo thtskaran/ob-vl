@@ -1,12 +1,24 @@
 import secrets
 import hashlib
+import asyncio
+import json
+import os
 from fastapi import APIRouter, Request, HTTPException, Header
-from typing import Optional
+from typing import Optional, Union
+from redis import Redis
+from rq import Queue
+from rq.job import Job
 
-from ..models.page import PageCreate, PageUpdate, PageResponse, PageCreateResponse
+from ..models.page import (
+    PageCreate, PageUpdate, PageResponse, PageCreateResponse,
+    PageJobResponse, PageJobStatusResponse
+)
 from ..services.slug_service import check_slug_availability
 from ..services.rate_limiter import rate_limiter
+from ..services.cache_service import cache_service
 from ..db.database import execute_query, execute_insert, execute_update, get_db
+from ..tasks.page_tasks import create_page_async
+from ..config import FRONTEND_DOMAIN
 
 router = APIRouter()
 
@@ -21,12 +33,15 @@ def hash_ip(ip: str) -> str:
     return hashlib.sha256(ip.encode()).hexdigest()[:16]
 
 
-@router.post("", response_model=PageCreateResponse)
+@router.post("", response_model=Union[PageCreateResponse, PageJobResponse])
 async def create_page(page: PageCreate, request: Request):
-    """Create a new Valentine's page."""
+    """
+    Create a new Valentine's page.
+    Tries synchronous creation first (2s timeout), falls back to queue if slow.
+    """
     # Rate limiting
     client_ip = request.client.host if request.client else "unknown"
-    allowed, retry_after = rate_limiter.check_page_creation(client_ip)
+    allowed, retry_after = await rate_limiter.check_page_creation(client_ip)
 
     if not allowed:
         raise HTTPException(
@@ -40,60 +55,113 @@ async def create_page(page: PageCreate, request: Request):
     if not available:
         raise HTTPException(status_code=400, detail=reason)
 
-    # Generate edit token
-    edit_token = generate_edit_token()
-
-    # Insert page
-    page_id = await execute_insert(
-        """
-        INSERT INTO pages (slug, slug_lower, title, message, sender_name, recipient_name, template_id, edit_token)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """,
-        (
-            page.slug,
-            page.slug.lower(),
-            page.title,
-            page.message,
-            page.sender_name,
-            page.recipient_name,
-            page.template_id,
-            edit_token,
+    # Try synchronous creation with 2s timeout
+    try:
+        result = await asyncio.wait_for(
+            create_page_async(
+                slug=page.slug,
+                title=page.title,
+                message=page.message,
+                template_id=page.template_id,
+                client_ip=client_ip,
+                sender_name=page.sender_name,
+                recipient_name=page.recipient_name,
+            ),
+            timeout=2.0
         )
-    )
 
-    # Log creation
-    await execute_insert(
-        "INSERT INTO creation_logs (ip_hash, page_id) VALUES (?, ?)",
-        (hash_ip(client_ip), page_id)
-    )
+        if result["status"] == "success":
+            # Invalidate cache
+            await cache_service.delete(f"slug_available:{page.slug.lower()}")
 
-    # Fetch created page
-    pages = await execute_query(
-        "SELECT * FROM pages WHERE id = ?",
-        (page_id,)
-    )
+            return PageCreateResponse(
+                page=PageResponse(**result["page"]),
+                edit_token=result["edit_token"],
+                url=result["url"]
+            )
+        else:
+            raise HTTPException(status_code=500, detail=result.get("error", "Failed to create page"))
 
-    if not pages:
-        raise HTTPException(status_code=500, detail="Failed to create page")
+    except asyncio.TimeoutError:
+        # Queue the job for background processing
+        redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
+        redis_conn = Redis.from_url(f"{redis_url}/2")
+        queue = Queue("page_creation", connection=redis_conn)
 
-    page_data = pages[0]
-    page_response = PageResponse(
-        id=page_data["id"],
-        slug=page_data["slug"],
-        title=page_data["title"],
-        message=page_data["message"],
-        sender_name=page_data["sender_name"],
-        recipient_name=page_data["recipient_name"],
-        template_id=page_data["template_id"],
-        created_at=page_data["created_at"],
-        view_count=page_data["view_count"],
-    )
+        job_data = json.dumps({
+            "slug": page.slug,
+            "title": page.title,
+            "message": page.message,
+            "template_id": page.template_id,
+            "client_ip": client_ip,
+            "sender_name": page.sender_name,
+            "recipient_name": page.recipient_name,
+        })
 
-    return PageCreateResponse(
-        page=page_response,
-        edit_token=edit_token,
-        url=f"https://special.obvix.io/{page.slug}"
-    )
+        job = queue.enqueue(
+            "app.tasks.page_tasks.create_page_sync",
+            job_data,
+            job_timeout=30
+        )
+
+        return PageJobResponse(
+            job_id=job.id,
+            status="queued",
+            message="Your page is being created. Please wait..."
+        )
+
+
+@router.get("/job/{job_id}", response_model=PageJobStatusResponse)
+async def get_job_status(job_id: str):
+    """Poll job status for queued page creation."""
+    try:
+        redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
+        redis_conn = Redis.from_url(f"{redis_url}/2")
+        job = Job.fetch(job_id, connection=redis_conn)
+
+        status_map = {
+            "queued": "queued",
+            "started": "started",
+            "finished": "finished",
+            "failed": "failed",
+        }
+
+        job_status = status_map.get(job.get_status(), "unknown")
+
+        if job_status == "finished":
+            result_json = job.result
+            result = json.loads(result_json) if isinstance(result_json, str) else result_json
+
+            if result["status"] == "success":
+                return PageJobStatusResponse(
+                    job_id=job_id,
+                    status="finished",
+                    result=PageCreateResponse(
+                        page=PageResponse(**result["page"]),
+                        edit_token=result["edit_token"],
+                        url=result["url"]
+                    )
+                )
+            else:
+                return PageJobStatusResponse(
+                    job_id=job_id,
+                    status="failed",
+                    error=result.get("error", "Unknown error")
+                )
+        elif job_status == "failed":
+            return PageJobStatusResponse(
+                job_id=job_id,
+                status="failed",
+                error=job.exc_info or "Job failed"
+            )
+        else:
+            return PageJobStatusResponse(
+                job_id=job_id,
+                status=job_status
+            )
+
+    except Exception as e:
+        raise HTTPException(status_code=404, detail=f"Job not found: {str(e)}")
 
 
 @router.get("/{slug}", response_model=PageResponse)

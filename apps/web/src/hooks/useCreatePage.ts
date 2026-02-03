@@ -20,8 +20,19 @@ export function useCreatePage(): UseCreatePageResult {
 
     try {
       const response = await api.createPage(data)
-      setResult(response)
-      return response
+
+      // Check if response is a job (queued) or immediate result
+      if ('job_id' in response) {
+        // Page creation was queued - poll for completion
+        console.log('Page creation queued, polling for completion...')
+        const finalResult = await api.pollJobUntilComplete(response.job_id)
+        setResult(finalResult)
+        return finalResult
+      } else {
+        // Immediate success
+        setResult(response)
+        return response
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to create page'
       setError(message)

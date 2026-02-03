@@ -3,12 +3,92 @@ version: '3.8'
 services:
   redis:
     image: redis:7-alpine
+    container_name: valentine-redis
+    restart: unless-stopped
     ports:
       - "6379:6379"
     volumes:
       - redis_data:/data
-    command: redis-server --appendonly yes
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    networks:
+      - valentine-net
+
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+      target: production
+    container_name: valentine-api
     restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./apps/api/.env
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_PATH=/data/valentine.db
+    volumes:
+      - ./data:/data
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - valentine-net
+
+  worker:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+      target: worker
+    restart: unless-stopped
+    env_file:
+      - ./apps/api/.env
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_PATH=/data/valentine.db
+    volumes:
+      - ./data:/data
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - valentine-net
+    deploy:
+      replicas: 2
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=https://api.obvix.cloud
+        - VITE_PUBLIC_URL=https://special.obvix.cloud
+        - VITE_APP_ENV=production
+    container_name: valentine-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api
+    networks:
+      - valentine-net
 
 volumes:
   redis_data:
+    driver: local
+
+networks:
+  valentine-net:
+    driver: bridge
