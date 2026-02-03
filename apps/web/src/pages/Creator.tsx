@@ -12,7 +12,7 @@ type Step = 'template' | 'content' | 'slug' | 'success'
 
 export function Creator() {
   const [step, setStep] = useState<Step>('template')
-  const [templateId, setTemplateId] = useState('classic')
+  const [templateId, setTemplateId] = useState('proposal')
   const [title, setTitle] = useState('')
   const [message, setMessage] = useState('')
   const [senderName, setSenderName] = useState('')
@@ -97,9 +97,23 @@ export function Creator() {
 
   if (step === 'success' && result) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
         <Confetti trigger={true} />
-        <Card variant="elevated" className="max-w-md w-full text-center">
+        {/* Success page GIF decorations */}
+        <div className="absolute top-10 left-10 animate-bounce opacity-80">
+          <img src="/7102e1771b31ce3665a3f15522a603b6.gif" alt="celebration" className="w-28 h-28 object-contain" />
+        </div>
+        <div className="absolute top-10 right-10 animate-bounce opacity-80" style={{ animationDelay: '0.2s' }}>
+          <img src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif" alt="celebration" className="w-28 h-28 object-contain" />
+        </div>
+        <div className="absolute bottom-10 left-1/4 animate-wiggle opacity-70">
+          <img src="/7102e1771b31ce3665a3f15522a603b6.gif" alt="celebration" className="w-24 h-24 object-contain" />
+        </div>
+        <div className="absolute bottom-10 right-1/4 animate-wiggle-delayed opacity-70">
+          <img src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif" alt="celebration" className="w-24 h-24 object-contain" />
+        </div>
+
+        <Card variant="elevated" className="max-w-md w-full text-center relative z-10">
           <CardHeader>
             <div className="text-6xl mb-4 animate-bounce-gentle">💕</div>
             <CardTitle>Your page is ready!</CardTitle>
@@ -144,8 +158,19 @@ export function Creator() {
   }
 
   return (
-    <div className="min-h-screen py-8 px-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen py-8 px-4 relative overflow-hidden">
+      {/* Floating GIF decorations */}
+      <div className="absolute top-20 left-8 hidden md:block animate-float opacity-80 z-0">
+        <img src="/7102e1771b31ce3665a3f15522a603b6.gif" alt="cute decoration" className="w-24 h-24 object-contain" />
+      </div>
+      <div className="absolute top-40 right-12 hidden md:block animate-float-delayed opacity-80 z-0">
+        <img src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif" alt="cute decoration" className="w-24 h-24 object-contain" />
+      </div>
+      <div className="absolute bottom-32 left-16 hidden lg:block animate-wiggle opacity-70 z-0">
+        <img src="/79ea6ffa1ca3345b59042a9ce9638dfc.gif" alt="cute decoration" className="w-20 h-20 object-contain" />
+      </div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl sm:text-5xl font-display text-gradient-valentine mb-2">

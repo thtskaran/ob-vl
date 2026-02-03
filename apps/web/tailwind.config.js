@@ -43,6 +43,8 @@ export default {
         'pulse-soft': 'pulse-soft 2s ease-in-out infinite',
         'sparkle': 'sparkle 1.5s ease-in-out infinite',
         'bounce-gentle': 'bounce-gentle 1s ease-in-out infinite',
+        'wiggle': 'wiggle 3s ease-in-out infinite',
+        'wiggle-delayed': 'wiggle 3s ease-in-out 1s infinite',
       },
       keyframes: {
         float: {
@@ -60,6 +62,10 @@ export default {
         'bounce-gentle': {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-5px)' },
+        },
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
         },
       },
       backgroundImage: {

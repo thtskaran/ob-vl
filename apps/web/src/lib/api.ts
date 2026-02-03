@@ -7,6 +7,7 @@ export interface Template {
   primary_color: string
   secondary_color: string
   font: string
+  interactive: boolean
 }
 
 export interface Page {

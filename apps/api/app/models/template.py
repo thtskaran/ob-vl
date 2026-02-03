@@ -8,6 +8,7 @@ class Template(BaseModel):
     primary_color: str
     secondary_color: str
     font: str
+    interactive: bool = False
 
 
 class TemplateListResponse(BaseModel):

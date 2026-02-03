@@ -24,7 +24,12 @@ app = FastAPI(
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000", "https://special.obvix.io"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://special.obvix.io",
+        "https://dbff56b7902f.ngrok-free.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
