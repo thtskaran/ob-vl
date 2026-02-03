@@ -5,8 +5,9 @@ services:
     image: redis:7-alpine
     container_name: valentine-redis
     restart: unless-stopped
-    ports:
-      - "6379:6379"
+    # Redis is internal only - not exposed to host
+    expose:
+      - "6379"
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
@@ -25,8 +26,9 @@ services:
       target: production
     container_name: valentine-api
     restart: unless-stopped
-    ports:
-      - "8000:8000"
+    # API is internal only - nginx will proxy to it
+    expose:
+      - "8000"
     env_file:
       - ./apps/api/.env
     environment:
@@ -72,14 +74,15 @@ services:
       context: ./apps/web
       dockerfile: Dockerfile
       args:
-        - VITE_API_URL=https://api.obvix.cloud
+        # API is accessible via the same domain through nginx proxy
+        - VITE_API_URL=https://special.obvix.cloud
         - VITE_PUBLIC_URL=https://special.obvix.cloud
         - VITE_APP_ENV=production
     container_name: valentine-web
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
+      # Only expose port 3000 - nginx reverse proxy will handle 80/443
+      - "127.0.0.1:3000:80"
     depends_on:
       - api
     networks:
