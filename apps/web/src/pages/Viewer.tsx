@@ -5,12 +5,14 @@ import { PageCard } from '../components/viewer/PageCard'
 import { TemplateRenderer, isInteractiveTemplate } from '../components/templates'
 import { Card, CardContent } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
+import { Seo } from '../components/Seo'
 
 export function Viewer() {
   const { slug } = useParams<{ slug: string }>()
   const [page, setPage] = useState<Page | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const publicOrigin = (import.meta.env.VITE_PUBLIC_URL || '').replace(/\/$/, '')
 
   useEffect(() => {
     async function loadPage() {
@@ -33,9 +35,55 @@ export function Viewer() {
     loadPage()
   }, [slug])
 
+  const absoluteUrl = (path?: string) => {
+    if (!path) return undefined
+    if (/^https?:\/\//i.test(path)) return path
+    const origin = publicOrigin || (typeof window !== 'undefined' ? window.location.origin : '')
+    if (!origin) return path
+    return path.startsWith('/') ? `${origin}${path}` : `${origin}/${path}`
+  }
+
+  const seoProps = (() => {
+    if (page) {
+      const sender = page.sender_name || 'Someone special'
+      const recipient = page.recipient_name || 'you'
+      return {
+        title: `${page.title} | A love note from ${sender}`,
+        description: `A heartfelt Valentine for ${recipient}, created on Obvix.io.`,
+        url: absoluteUrl(`/${page.slug}`),
+        image: '/og-card.png',
+        imageAlt: `Valentine message for ${recipient}`,
+        keywords: [
+          'personalized valentine',
+          page.slug,
+          sender,
+          recipient,
+          'obvix valentine viewer',
+        ],
+        type: 'article',
+      }
+    }
+
+    if (error) {
+      return {
+        title: 'Valentine page not found | Obvix.io',
+        description: error,
+        url: absoluteUrl(slug ? `/${slug}` : undefined),
+      }
+    }
+
+    return {
+      title: 'Loading Valentine surprise | Obvix.io',
+      description: 'Unwrapping a heartfelt surprise for you.',
+      url: absoluteUrl(slug ? `/${slug}` : undefined),
+    }
+  })()
+
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      <>
+        <Seo {...seoProps} />
+        <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
         <div className="absolute top-1/4 left-1/4 animate-float opacity-60 hidden sm:block">
           <img src="/7102e1771b31ce3665a3f15522a603b6.gif" alt="loading" className="w-12 h-12 sm:w-16 sm:h-16 object-contain" />
         </div>
@@ -50,15 +98,18 @@ export function Viewer() {
           </div>
           <p className="text-sm sm:text-base text-pink-600">Loading your surprise...</p>
         </div>
-      </div>
+        </div>
+      </>
     )
   }
 
   if (error || !page) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <Card variant="elevated" className="max-w-md w-full text-center">
-          <CardContent className="space-y-4">
+      <>
+        <Seo {...seoProps} />
+        <div className="min-h-screen flex items-center justify-center p-4">
+          <Card variant="elevated" className="max-w-md w-full text-center">
+            <CardContent className="space-y-4">
             <div className="text-5xl sm:text-6xl mb-4">💔</div>
             <h1 className="text-xl sm:text-2xl font-display text-pink-600">
               Page Not Found
@@ -72,6 +123,7 @@ export function Viewer() {
           </CardContent>
         </Card>
       </div>
+      </>
     )
   }
 
@@ -79,6 +131,7 @@ export function Viewer() {
   if (isInteractiveTemplate(page.template_id)) {
     return (
       <>
+        <Seo {...seoProps} />
         <TemplateRenderer page={page} />
         {/* Footer for interactive templates */}
         <div className="fixed bottom-4 left-0 right-0 text-center z-50 px-4">
@@ -93,7 +146,9 @@ export function Viewer() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 py-12 relative overflow-hidden">
+    <>
+      <Seo {...seoProps} />
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 py-12 relative overflow-hidden">
       {/* Decorative GIFs for classic templates - hide on mobile */}
       <div className="absolute top-20 left-10 hidden lg:block animate-float opacity-50 z-0">
         <img src="/7102e1771b31ce3665a3f15522a603b6.gif" alt="decoration" className="w-20 h-20 object-contain" />
@@ -117,6 +172,7 @@ export function Viewer() {
           </Link>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   )
 }

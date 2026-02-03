@@ -3,10 +3,12 @@ import { Creator } from './pages/Creator'
 import { Viewer } from './pages/Viewer'
 import { FloatingHearts } from './components/decorations/FloatingHearts'
 import { ErrorBoundary } from './components/ErrorBoundary'
+import { Seo } from './components/Seo'
 
 function App() {
   return (
     <ErrorBoundary>
+      <Seo />
       <BrowserRouter>
         <div className="min-h-screen relative overflow-hidden">
           <FloatingHearts />
