@@ -1,0 +1,271 @@
+import { useState, useCallback } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
+import { Button } from '../components/ui/Button'
+import { TemplateSelector } from '../components/creator/TemplateSelector'
+import { ContentForm } from '../components/creator/ContentForm'
+import { SlugChecker } from '../components/creator/SlugChecker'
+import { PreviewPane } from '../components/creator/PreviewPane'
+import { Confetti } from '../components/decorations/Confetti'
+import { useCreatePage } from '../hooks/useCreatePage'
+
+type Step = 'template' | 'content' | 'slug' | 'success'
+
+export function Creator() {
+  const [step, setStep] = useState<Step>('template')
+  const [templateId, setTemplateId] = useState('classic')
+  const [title, setTitle] = useState('')
+  const [message, setMessage] = useState('')
+  const [senderName, setSenderName] = useState('')
+  const [recipientName, setRecipientName] = useState('')
+  const [slug, setSlug] = useState('')
+  const [isSlugAvailable, setIsSlugAvailable] = useState(false)
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  const { isCreating, result, error: createError, createPage } = useCreatePage()
+
+  const validateContent = () => {
+    const newErrors: Record<string, string> = {}
+
+    if (!title.trim()) {
+      newErrors.title = 'Please enter a title'
+    }
+
+    if (!message.trim()) {
+      newErrors.message = 'Please write a message'
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleNext = () => {
+    if (step === 'template') {
+      setStep('content')
+    } else if (step === 'content') {
+      if (validateContent()) {
+        setStep('slug')
+      }
+    }
+  }
+
+  const handleBack = () => {
+    if (step === 'content') {
+      setStep('template')
+    } else if (step === 'slug') {
+      setStep('content')
+    }
+  }
+
+  const handleSlugAvailabilityChange = useCallback((available: boolean) => {
+    setIsSlugAvailable(available)
+  }, [])
+
+  const handleCreate = async () => {
+    if (!isSlugAvailable || slug.length < 3) return
+
+    const response = await createPage({
+      slug,
+      title,
+      message,
+      sender_name: senderName || undefined,
+      recipient_name: recipientName || undefined,
+      template_id: templateId,
+    })
+
+    if (response) {
+      setStep('success')
+    }
+  }
+
+  const handleCopyUrl = () => {
+    if (result?.url) {
+      navigator.clipboard.writeText(result.url)
+    }
+  }
+
+  const handleCreateAnother = () => {
+    setStep('template')
+    setTemplateId('classic')
+    setTitle('')
+    setMessage('')
+    setSenderName('')
+    setRecipientName('')
+    setSlug('')
+    setIsSlugAvailable(false)
+    setErrors({})
+  }
+
+  if (step === 'success' && result) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <Confetti trigger={true} />
+        <Card variant="elevated" className="max-w-md w-full text-center">
+          <CardHeader>
+            <div className="text-6xl mb-4 animate-bounce-gentle">💕</div>
+            <CardTitle>Your page is ready!</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-gray-600">
+              Share this link with your special someone:
+            </p>
+            <div className="bg-pink-50 rounded-xl p-4 break-all">
+              <a
+                href={result.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-pink-600 hover:text-pink-700 font-medium"
+              >
+                {result.url}
+              </a>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button onClick={handleCopyUrl} className="flex-1">
+                Copy Link
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={handleCreateAnother}
+                className="flex-1"
+              >
+                Create Another
+              </Button>
+            </div>
+            <p className="text-xs text-pink-400 mt-4">
+              Save your edit token if you want to modify this page later:
+              <br />
+              <code className="text-xs bg-pink-100 px-2 py-1 rounded mt-1 inline-block">
+                {result.edit_token}
+              </code>
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen py-8 px-4">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl sm:text-5xl font-display text-gradient-valentine mb-2">
+            Create Your Valentine
+          </h1>
+          <p className="text-pink-600">
+            Make someone's day special with a personalized love note
+          </p>
+        </div>
+
+        {/* Progress */}
+        <div className="flex justify-center mb-8">
+          <div className="flex items-center gap-2">
+            {['template', 'content', 'slug'].map((s, i) => (
+              <div key={s} className="flex items-center">
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors
+                    ${step === s || ['template', 'content', 'slug'].indexOf(step) > i
+                      ? 'bg-pink-500 text-white'
+                      : 'bg-pink-100 text-pink-400'
+                    }`}
+                >
+                  {i + 1}
+                </div>
+                {i < 2 && (
+                  <div
+                    className={`w-8 sm:w-16 h-1 mx-1 transition-colors
+                      ${['template', 'content', 'slug'].indexOf(step) > i
+                        ? 'bg-pink-500'
+                        : 'bg-pink-100'
+                      }`}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Main content */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Form */}
+          <Card variant="elevated">
+            <CardHeader>
+              <CardTitle>
+                {step === 'template' && 'Choose a Style'}
+                {step === 'content' && 'Write Your Message'}
+                {step === 'slug' && 'Pick Your URL'}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {step === 'template' && (
+                <TemplateSelector
+                  selected={templateId}
+                  onSelect={setTemplateId}
+                />
+              )}
+
+              {step === 'content' && (
+                <ContentForm
+                  title={title}
+                  message={message}
+                  senderName={senderName}
+                  recipientName={recipientName}
+                  onTitleChange={setTitle}
+                  onMessageChange={setMessage}
+                  onSenderNameChange={setSenderName}
+                  onRecipientNameChange={setRecipientName}
+                  errors={errors}
+                />
+              )}
+
+              {step === 'slug' && (
+                <SlugChecker
+                  value={slug}
+                  onChange={setSlug}
+                  onAvailabilityChange={handleSlugAvailabilityChange}
+                />
+              )}
+
+              {createError && (
+                <p className="text-red-500 text-sm">💔 {createError}</p>
+              )}
+
+              {/* Navigation */}
+              <div className="flex gap-3 pt-4">
+                {step !== 'template' && (
+                  <Button variant="secondary" onClick={handleBack}>
+                    Back
+                  </Button>
+                )}
+                {step !== 'slug' ? (
+                  <Button onClick={handleNext} className="flex-1">
+                    Continue
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleCreate}
+                    disabled={!isSlugAvailable || slug.length < 3}
+                    isLoading={isCreating}
+                    className="flex-1"
+                  >
+                    Create Page
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Preview */}
+          <div className="hidden lg:block">
+            <PreviewPane
+              title={title}
+              message={message}
+              senderName={senderName}
+              recipientName={recipientName}
+              templateId={templateId}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
