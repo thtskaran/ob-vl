@@ -202,6 +202,27 @@ export function Creator() {
             <p className="text-sm sm:text-base text-pink-600 px-4">
               Make someone's day special with a personalized love note
             </p>
+            <p className="mt-2 text-xs sm:text-sm text-pink-500 px-4">
+              Fun project by{' '}
+              <a
+                href="https://obvix.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold underline decoration-pink-300 hover:decoration-pink-500"
+              >
+                Obvix
+              </a>
+              . Follow us on Instagram for more such projects:{' '}
+              <a
+                href="https://instagram.com/obvixai"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold underline decoration-pink-300 hover:decoration-pink-500"
+              >
+                instagram.com/obvixai
+              </a>
+              .
+            </p>
           </div>
 
           {/* Progress */}
