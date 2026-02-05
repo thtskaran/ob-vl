@@ -33,14 +33,31 @@ def hash_ip(ip: str) -> str:
     return hashlib.sha256(ip.encode()).hexdigest()[:16]
 
 
+def get_client_ip(request: Request) -> str:
+    """
+    Get the best-guess client IP.
+
+    Prefer X-Forwarded-For (set by reverse proxies like nginx) and fall back to the direct client IP.
+    This prevents many different users behind the same proxy from sharing a single rate limit bucket.
+    """
+    x_forwarded_for = request.headers.get("x-forwarded-for")
+    if x_forwarded_for:
+        # X-Forwarded-For can be a comma-separated list. The first value is the original client IP.
+        ip = x_forwarded_for.split(",")[0].strip()
+        if ip:
+            return ip
+
+    return request.client.host if request.client else "unknown"
+
+
 @router.post("", response_model=Union[PageCreateResponse, PageJobResponse])
 async def create_page(page: PageCreate, request: Request):
     """
     Create a new Valentine's page.
     Tries synchronous creation first (2s timeout), falls back to queue if slow.
     """
-    # Rate limiting
-    client_ip = request.client.host if request.client else "unknown"
+    # Rate limiting - use real client IP when behind proxies
+    client_ip = get_client_ip(request)
     allowed, retry_after = await rate_limiter.check_page_creation(client_ip)
 
     if not allowed:
